@@ -1,0 +1,54 @@
+:root {
+  --swiper-navigation-color: white;
+  --toastify-toast-min-height: 120px;
+  --toastify-toast-width: 50%;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind colors;
+
+@layer base {
+  body {
+    @apply bg-light_black text-white;
+  }
+
+  img {
+    @apply object-cover w-full h-full select-none;
+  }
+}
+
+@layer components {
+  .max_width {
+    @apply max-w-[1300px] mx-auto;
+  }
+}
+html {
+  font-family: Roboto, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+#main {
+  max-width: 1280px;
+}
+#banner {
+  width: 200px;
+}
+
+.body-cols + .body-cols {
+  @apply pt-4 pb-4;
+}
+
+.body-cols a {
+  @apply underline underline-offset-2;
+}
+
+form input,
+form textarea {
+  @apply text-black;
+}
+
+.Toastify__toast-container {
+  min-width: 50%;
+}

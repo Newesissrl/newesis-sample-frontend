@@ -1,0 +1,10 @@
+.env
+*.env
+node_modules
+.azuredevops
+env-config.js
+.husky
+build
+.vscode
+GitVersion.yml
+.git
