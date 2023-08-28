@@ -10,8 +10,6 @@ jobs:
     environment: newesis-frontend
     steps:
     - uses: azure/setup-kubectl@v3
-      with:
-        version: 'v1.25.11'
       id: installkubectl
     - uses: azure/setup-helm@v3
       with:
