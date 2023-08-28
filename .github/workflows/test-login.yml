@@ -21,3 +21,5 @@ jobs:
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           az aks install-cli
           az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }} --admin
+          kubectl get pod -A 
+          helm ls -A 
