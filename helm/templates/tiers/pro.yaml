@@ -1,0 +1,20 @@
+{{- if eq .Values.tenant.tier "pro" -}}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.sampleFrontend.name }}-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.sampleFrontend.name }}
+  minReplicas: {{ include "mzinga.deployment.replicas" (dict "tier" .Values.tenant.tier "replicas" .Values.sampleFrontend.replicas) }}
+  maxReplicas: {{include "mzinga.hpas.maxReplicas" . }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+{{- end -}}
