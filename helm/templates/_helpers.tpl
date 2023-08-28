@@ -1,7 +1,7 @@
 {{- define "mzinga.deployment.replicas" }}
     {{- $replicas := 1 -}}
     {{- if eq .tier "pro" -}}
-    {{- $replicas = 3 -}}
+    {{- $replicas = 1 -}}
     {{- end -}}
     {{- if eq .tier "ultra" -}}
     {{- $replicas = .replicas | default 5 -}}
@@ -12,7 +12,7 @@
 {{- define "mzinga.hpas.maxReplicas" }}
     {{- $replicas := 1 -}}
     {{- if eq .Values.tenant.tier "pro" -}}
-    {{- $replicas = 5 -}}
+    {{- $replicas = 3 -}}
     {{- end -}}
     {{- if eq .Values.tenant.tier "ultra" -}}
     {{- $replicas = 7 -}}
