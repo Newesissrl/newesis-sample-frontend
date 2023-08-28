@@ -25,7 +25,5 @@ jobs:
           az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
           az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }} --admin
-    - name: interact with kubectl 
-      run: kubectl get pod -A 
-    - name: interact with helm 
-      run: helm ls -A 
+          kubectl get pod -A 
+          helm ls -A 
