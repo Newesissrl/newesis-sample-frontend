@@ -73,6 +73,12 @@ jobs:
         echo CommitsSinceVersionSourcePadded: ${{ env.GitVersion.CommitsSinceVersionSourcePadded }}
         echo UncommittedChanges: ${{ env.GitVersion.UncommittedChanges }}
         echo CommitDate: ${{ env.GitVersion.CommitDate }}
+  debugOutput:
+    runs-on: ubuntu-latest
+    needs: gitversion
+    steps:
+      - name: Checkout repository
+        run: echo ${{ needs.gitversion.outputs.tagVersion }}
   build-and-push-image:
     runs-on: ubuntu-latest
     needs: gitversion
