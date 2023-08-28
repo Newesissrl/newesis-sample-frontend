@@ -1,0 +1,102 @@
+#
+name: Create and publish the Container Image
+
+# Configures this workflow to run every time a change is pushed to the branch called `release`.
+on:
+  workflow_dispatch:
+  push:
+    branches: ['release']
+
+# Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
+env:
+  IMAGE_NAME: ${{ github.repository }}
+
+# There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
+jobs:
+  gitversion:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.11
+      with:
+        versionSpec: 5.x
+    - name: Setup netcore
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.x
+    - name: Setup gitversion
+      uses: gittools/actions/gitversion/setup@v0.9.11
+      with:
+        versionSpec: 5.x
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.9.11
+      with:
+        useConfigFile: true
+        configFilePath: ${{ github.workspace }}/GitVersion.yml
+    - name: Debug gitversion values
+      run: |
+        echo Major: ${{ env.GitVersion.Major }}
+        echo Minor: ${{ env.GitVersion.Minor }}
+        echo Patch: ${{ env.GitVersion.Patch }}
+        echo PreReleaseTag: ${{ env.GitVersion.PreReleaseTag }}
+        echo PreReleaseTagWithDash: ${{ env.GitVersion.PreReleaseTagWithDash }}
+        echo PreReleaseLabel: ${{ env.GitVersion.PreReleaseLabel }}
+        echo PreReleaseNumber: ${{ env.GitVersion.PreReleaseNumber }}
+        echo WeightedPreReleaseNumber: ${{ env.GitVersion.WeightedPreReleaseNumber }}
+        echo BuildMetaData: ${{ env.GitVersion.BuildMetaData }}
+        echo BuildMetaDataPadded: ${{ env.GitVersion.BuildMetaDataPadded }}
+        echo FullBuildMetaData: ${{ env.GitVersion.FullBuildMetaData }}
+        echo MajorMinorPatch: ${{ env.GitVersion.MajorMinorPatch }}
+        echo SemVer: ${{ env.GitVersion.SemVer }}
+        echo LegacySemVer: ${{ env.GitVersion.LegacySemVer }}
+        echo LegacySemVerPadded: ${{ env.GitVersion.LegacySemVerPadded }}
+        echo AssemblySemVer: ${{ env.GitVersion.AssemblySemVer }}
+        echo AssemblySemFileVer: ${{ env.GitVersion.AssemblySemFileVer }}
+        echo FullSemVer: ${{ env.GitVersion.FullSemVer }}
+        echo InformationalVersion: ${{ env.GitVersion.InformationalVersion }}
+        echo BranchName: ${{ env.GitVersion.BranchName }}
+        echo EscapedBranchName: ${{ env.GitVersion.EscapedBranchName }}
+        echo Sha: ${{ env.GitVersion.Sha }}
+        echo ShortSha: ${{ env.GitVersion.ShortSha }}
+        echo NuGetVersionV2: ${{ env.GitVersion.NuGetVersionV2 }}
+        echo NuGetVersion: ${{ env.GitVersion.NuGetVersion }}
+        echo NuGetPreReleaseTagV2: ${{ env.GitVersion.NuGetPreReleaseTagV2 }}
+        echo NuGetPreReleaseTag: ${{ env.GitVersion.NuGetPreReleaseTag }}
+        echo VersionSourceSha: ${{ env.GitVersion.VersionSourceSha }}
+        echo CommitsSinceVersionSource: ${{ env.GitVersion.CommitsSinceVersionSource }}
+        echo CommitsSinceVersionSourcePadded: ${{ env.GitVersion.CommitsSinceVersionSourcePadded }}
+        echo UncommittedChanges: ${{ env.GitVersion.UncommittedChanges }}
+        echo CommitDate: ${{ env.GitVersion.CommitDate }}
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_NAME }}
+          username: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_USERNAME }}
+          password: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_PASSWORD }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          push: true
+          tags: ${{ env.GitVersion.FullSemVer }}
+  tagRepo:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: add tag to repo
+      run: |
+        git tag ${{ env.GitVersion.FullSemVer }}
+        git push --tags
+      if: (success() && (variables['Build.SourceBranchName'] == 'main'))
