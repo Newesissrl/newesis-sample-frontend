@@ -118,4 +118,5 @@ jobs:
             az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
             az aks install-cli
             az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }} --admin
+            helm dependency build ${{ vars.CHART_PATH }}
             helm upgrade -i -n ${{ vars.DEPLOY_NAMESPACE }} --create-namespace newesis-frontend ${{ vars.CHART_PATH }} --set sampleFrontend.imageTag=${{ needs.gitversion.outputs.tagVersion }},sampleFrontend.image=${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}
