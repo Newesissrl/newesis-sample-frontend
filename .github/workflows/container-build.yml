@@ -99,4 +99,3 @@ jobs:
       run: |
         git tag ${{ env.GitVersion.FullSemVer }}
         git push --tags
-      if: (success() && (variables['Build.SourceBranchName'] == 'main'))
