@@ -102,6 +102,7 @@ jobs:
       contents: read
       id-token: write
     runs-on: ubuntu-latest
+    environment: newesis-frontend
     needs: [gitversion, build-and-push-image]
     steps:
       - uses: actions/checkout@v3
@@ -116,6 +117,7 @@ jobs:
       - name: Get K8s context
         uses: azure/aks-set-context@v3
         with:
+          subscription: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           resource-group: ${{ vars.RESOURCE_GROUP }}
           cluster-name: ${{ vars.CLUSTER_NAME }}
           admin: 'false'
