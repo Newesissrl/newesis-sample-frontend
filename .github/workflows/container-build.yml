@@ -70,6 +70,7 @@ jobs:
         echo CommitDate: ${{ env.GitVersion.CommitDate }}
   build-and-push-image:
     runs-on: ubuntu-latest
+    needs: gitversion
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -92,6 +93,7 @@ jobs:
           tags: ${{ env.GitVersion.FullSemVer }}
   tagRepo:
     runs-on: ubuntu-latest
+    needs: [gitversion, build-and-push-image]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
