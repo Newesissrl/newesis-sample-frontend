@@ -1,0 +1,24 @@
+name: Test Azure Login
+on:
+  push:
+    branches: ['feat/deploy']
+
+jobs:
+
+  login:
+    runs-on: ubuntu-latest
+    environment: newesis-frontend
+    steps:
+      - name: Set up kubelogin for non-interactive login
+        uses: azure/use-kubelogin@v1
+        with:
+          kubelogin-version: 'v0.0.25'
+          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Get K8s context
+        uses: azure/aks-set-context@v3
+        with:
+          subscription: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resource-group: ${{ vars.RESOURCE_GROUP }}
+          cluster-name: ${{ vars.CLUSTER_NAME }}
+          admin: 'false'
+          use-kubelogin: 'true'

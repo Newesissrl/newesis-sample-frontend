@@ -109,7 +109,7 @@ jobs:
       - name: Azure login
         uses: azure/login@v1.4.6
         with:
-          credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Set up kubelogin for non-interactive login
         uses: azure/use-kubelogin@v1
         with:
