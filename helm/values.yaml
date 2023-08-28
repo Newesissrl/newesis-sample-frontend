@@ -3,7 +3,7 @@ tenant:
   name: "newesiscorporate"
   tier: "pro"
 nodePool:
-  priority: "Spot"
+  # priority: "Spot" # To be set to force deployment in spot instances
   spot:
     tolerations: 
       - key: "kubernetes.azure.com/scalesetpriority"
