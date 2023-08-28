@@ -33,6 +33,7 @@ jobs:
       with:
         versionSpec: 5.x
     - name: Determine Version
+      id: setVersion
       uses: gittools/actions/gitversion/execute@v0.9.11
       with:
         useConfigFile: true
@@ -72,7 +73,7 @@ jobs:
         echo UncommittedChanges: ${{ env.GitVersion.UncommittedChanges }}
         echo CommitDate: ${{ env.GitVersion.CommitDate }}
     outputs:
-      tagVersion: ${{ env.GitVersion.FullSemVer }} 
+      tagVersion: ${{ steps.setVersion.outputs.GitVersion_FullSemVer }}
   debugOutput:
     runs-on: ubuntu-latest
     needs: gitversion
