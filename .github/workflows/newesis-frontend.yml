@@ -1,21 +1,13 @@
-#
-name: Create and publish the Container Image
-
-# Configures this workflow to run every time a change is pushed to the branch called `release`.
+name: Create and publishthe Container Image and Deploy to Newesis Frontend
 on:
-  workflow_dispatch:
   push:
     branches: ['main']
 
-# Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
-env:
-  IMAGE_NAME: "newesis/website/frontend"
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
-
-# There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
+
   gitversion:
     runs-on: ubuntu-latest
+    environment: newesis-frontend
     steps:
     - uses: actions/checkout@v3
       with: 
@@ -74,8 +66,10 @@ jobs:
         echo CommitDate: ${{ env.GitVersion_CommitDate }}
     outputs:
       tagVersion: ${{ env.GitVersion_FullSemVer }}
+
   build-and-push-image:
     runs-on: ubuntu-latest
+    environment: newesis-frontend
     needs: gitversion
     steps:
       - name: Checkout repository
@@ -83,15 +77,16 @@ jobs:
       - name: Log in to the Container registry
         uses: azure/docker-login@v1
         with:
-          login-server: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_NAME }}
+          login-server: ${{ env.NEWESIS_CONTAINER_REGISTRY_NAME }}
           username: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_USERNAME }}
           password: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_PASSWORD }}
       - name: Build and push Docker image
         run: |
-          docker build . -t ${{ secrets.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
-          docker push ${{ secrets.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
+          docker build . -t ${{ env.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
+          docker push ${{ env.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
   tagRepo:
     runs-on: ubuntu-latest
+    environment: newesis-frontend
     needs: [gitversion, build-and-push-image]
     steps:
     - name: Checkout repository
@@ -100,3 +95,46 @@ jobs:
       run: |
         git tag ${{ needs.gitversion.outputs.tagVersion }}
         git push --tags
+
+  deploy:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    needs: [gitversion, build-and-push-image]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Azure login
+        uses: azure/login@v1.4.6
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Set up kubelogin for non-interactive login
+        uses: azure/use-kubelogin@v1
+        with:
+          kubelogin-version: 'v0.0.25'
+      - name: Get K8s context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          cluster-name: ${{ env.CLUSTER_NAME }}
+          admin: 'false'
+          use-kubelogin: 'true'
+      - name: Bake deployment
+        uses: azure/k8s-bake@v2
+        with:
+          renderEngine: "helm"
+          helmChart: ${{ env.CHART_PATH }}
+          overrides: |
+            sampleFrontend.imageTag:${{ needs.gitversion.outputs.tagVersion }}
+            sampleFrontend.image:${{ env.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}
+          helm-version: "latest"
+        id: bake
+      - name: Deploy application
+        uses: Azure/k8s-deploy@v4
+        with:
+          action: deploy
+          manifests: ${{ steps.bake.outputs.manifestsBundle }}
+          namespace: ${{ env.DEPLOY_NAMESPACE }}
