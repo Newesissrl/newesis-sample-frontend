@@ -16,8 +16,6 @@ env:
 jobs:
   gitversion:
     runs-on: ubuntu-latest
-    outputs:
-      tagVersion: ${{ env.GitVersion.FullSemVer }} 
     steps:
     - uses: actions/checkout@v2
       with: 
@@ -73,6 +71,8 @@ jobs:
         echo CommitsSinceVersionSourcePadded: ${{ env.GitVersion.CommitsSinceVersionSourcePadded }}
         echo UncommittedChanges: ${{ env.GitVersion.UncommittedChanges }}
         echo CommitDate: ${{ env.GitVersion.CommitDate }}
+    outputs:
+      tagVersion: ${{ env.GitVersion.FullSemVer }} 
   debugOutput:
     runs-on: ubuntu-latest
     needs: gitversion
