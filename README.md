@@ -6,6 +6,9 @@
 
 Newesis Sample Frontend is a simple React frontend web application. It uses the Newesis MZinga.io platform, built starting from PayloadCMS. 
 
+## Status of last build and deployment
+
+[![Create and publishthe Container Image and Deploy to Newesis Frontend](https://github.com/Newesissrl/newesis-sample-frontend/actions/workflows/newesis-frontend.yml/badge.svg)](https://github.com/Newesissrl/newesis-sample-frontend/actions/workflows/newesis-frontend.yml)
 
 ## Getting Started
 
