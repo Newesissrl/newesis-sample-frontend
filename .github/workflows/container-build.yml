@@ -72,9 +72,8 @@ jobs:
         echo CommitsSinceVersionSourcePadded: ${{ env.GitVersion_CommitsSinceVersionSourcePadded }}
         echo UncommittedChanges: ${{ env.GitVersion_UncommittedChanges }}
         echo CommitDate: ${{ env.GitVersion_CommitDate }}
-        echo UsingOuput: ${{ steps.setVersion.outputs.GitVersion_FullSemVer }}
     outputs:
-      tagVersion: ${{ steps.setVersion.outputs.GitVersion_FullSemVer }}
+      tagVersion: ${{ env.GitVersion_FullSemVer }}
   debugOutput:
     runs-on: ubuntu-latest
     needs: gitversion
