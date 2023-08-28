@@ -77,13 +77,13 @@ jobs:
       - name: Log in to the Container registry
         uses: azure/docker-login@v1
         with:
-          login-server: ${{ env.NEWESIS_CONTAINER_REGISTRY_NAME }}
+          login-server: ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}
           username: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_USERNAME }}
           password: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_PASSWORD }}
       - name: Build and push Docker image
         run: |
-          docker build . -t ${{ env.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
-          docker push ${{ env.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
+          docker build . -t ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
+          docker push ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
   tagRepo:
     runs-on: ubuntu-latest
     environment: newesis-frontend
@@ -118,18 +118,18 @@ jobs:
       - name: Get K8s context
         uses: azure/aks-set-context@v3
         with:
-          resource-group: ${{ env.RESOURCE_GROUP }}
-          cluster-name: ${{ env.CLUSTER_NAME }}
+          resource-group: ${{ vars.RESOURCE_GROUP }}
+          cluster-name: ${{ vars.CLUSTER_NAME }}
           admin: 'false'
           use-kubelogin: 'true'
       - name: Bake deployment
         uses: azure/k8s-bake@v2
         with:
           renderEngine: "helm"
-          helmChart: ${{ env.CHART_PATH }}
+          helmChart: ${{ vars.CHART_PATH }}
           overrides: |
             sampleFrontend.imageTag:${{ needs.gitversion.outputs.tagVersion }}
-            sampleFrontend.image:${{ env.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ env.IMAGE_NAME }}
+            sampleFrontend.image:${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}
           helm-version: "latest"
         id: bake
       - name: Deploy application
@@ -137,4 +137,4 @@ jobs:
         with:
           action: deploy
           manifests: ${{ steps.bake.outputs.manifestsBundle }}
-          namespace: ${{ env.DEPLOY_NAMESPACE }}
+          namespace: ${{ vars.DEPLOY_NAMESPACE }}
