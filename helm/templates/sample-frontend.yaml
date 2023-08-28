@@ -1,0 +1,80 @@
+{{- if .Values.sampleFrontend.enabled -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.sampleFrontend.name }}
+  labels:
+    app: mzinga
+    role: sample-frontend
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    releaseTime: {{ dateInZone "2006-01-02T15:04:05Z" (now) "UTC"| quote }}
+spec:
+  replicas: {{ .Values.sampleFrontend.replicas }}
+  selector:
+    matchLabels:
+      app: mzinga
+      role: sample-frontend
+  template:
+    metadata:
+      annotations:
+        sidecar.opentelemetry.io/inject: "true"
+      labels:
+        app: mzinga
+        role: sample-frontend
+    spec:
+      {{- include "mzinga.affinity" (dict "affinity" .Values.sampleFrontend.affinity "context" $) | nindent 6 }}
+      {{- include "mzinga.tolerations" (dict "tolerations" .Values.sampleFrontend.tolerations "context" $) | nindent 6 }}
+      containers:
+        - name: sample-frontend
+          image: {{ .Values.sampleFrontend.image }}:{{ .Values.sampleFrontend.imageTag }}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_API_BASE_URL
+              value: https://api-{{ .Values.tenant.name }}.{{ .Values.basedns }}
+            - name: REACT_APP_WS_BASE_URL
+              value: "wss://ws-{{ .Values.tenant.name }}.{{ .Values.basedns }}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.sampleFrontend.name }}-svc
+spec:
+  selector:
+    app: mzinga
+    role: sample-frontend
+  ports:
+    - name: app
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.sampleFrontend.name }}-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    kubernetes.io/ingress.allow-http: 'false'
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: 'true'
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.sampleFrontend.hostName }}
+      secretName: sample-fe-certificates
+  rules:
+    - host: {{ .Values.sampleFrontend.hostName }}
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ .Values.sampleFrontend.name }}-svc
+                port:
+                  number: 3000
+{{- end -}}

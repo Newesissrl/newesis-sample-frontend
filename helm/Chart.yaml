@@ -1,0 +1,10 @@
+apiVersion: v2
+description: Creation of Newesis Sample Frontend instance
+name: newesis-sample-frontend
+version: 1.0.0
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 2.x.x

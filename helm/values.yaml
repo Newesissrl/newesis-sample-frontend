@@ -1,0 +1,29 @@
+basedns: "mzinga.io"
+tenant:
+  name: "newesiscorporate"
+  tier: "pro"
+nodePool:
+  priority: "Spot"
+  spot:
+    tolerations: 
+      - key: "kubernetes.azure.com/scalesetpriority"
+        operator: "Equal"
+        value: "spot"
+        effect: "NoSchedule"
+sampleFrontend:
+  enabled: true
+  name: newesis-sample-fe
+  hostName: www.newesis.com
+  replicas: 1
+  image: newesissrl.azurecr.io/mzinga/payload/sample-frontend
+  imageTag: 0.8.0
+  tolerations: []
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: mzinga.io/tenants
+                operator: In
+                values:
+                  - "true"

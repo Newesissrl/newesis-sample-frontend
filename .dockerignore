@@ -8,3 +8,4 @@ build
 .vscode
 GitVersion.yml
 .git
+helm
