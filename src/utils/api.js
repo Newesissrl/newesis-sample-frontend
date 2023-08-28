@@ -23,7 +23,7 @@ const API = {
       { addQueryPrefix: true },
     );
     const req = await fetch(
-      `${apiBaseUrl}/api/${endpoint}${stringifiedQuery}&locale=${getLocale(
+      `${apiBaseUrl}/api/${endpoint}${stringifiedQuery}&sort=-updatedAt&locale=${getLocale(
         locale,
       )}`,
     );
