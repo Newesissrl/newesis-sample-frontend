@@ -15,8 +15,8 @@ sampleFrontend:
   name: newesis-sample-fe
   hostName: www.newesis.com
   replicas: 1
-  image: newesissrl.azurecr.io/mzinga/payload/sample-frontend
-  imageTag: 0.8.0
+  image: newesissrl.azurecr.io/newesis/website/frontend  # Placeholder value 
+  imageTag: 0.1.23 # Placeholder value 
   tolerations: []
   affinity:
     nodeAffinity:
