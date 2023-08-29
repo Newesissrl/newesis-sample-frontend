@@ -2,7 +2,7 @@
 set -e
 
 if [ "$1" = 'yarn' ]; then
-    /docker-entrypoint/env.sh
+    node /docker-entrypoint/build-env.js /app/build/
     exec "$@"
 fi
 

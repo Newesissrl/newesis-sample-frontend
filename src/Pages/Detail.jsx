@@ -5,6 +5,7 @@ import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import dayjs from "dayjs";
+import Picture from "../components/Picture";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -12,7 +13,7 @@ dayjs.extend(relativeTime);
 
 const Detail = () => {
   const [item, setItem] = useState(null);
-  const [media, setMedia] = useState(false);
+  const [thumb, setThumb] = useState(false);
   let { id } = useParams();
   const locale = (qs.parse(window.location.search) || {}).locale || "en";
   // fetch data when page load
@@ -21,9 +22,9 @@ const Detail = () => {
       try {
         const res = await API.fetchSingleAsJson("stories", locale, id);
         if (res.body.length > 1 && res.body[1]?.media) {
-          setMedia(res.body[1]?.media.sizes.portrait.url);
+          setThumb(res.body[1]?.media.sizes.portrait.url);
         } else if (res.thumb) {
-          setMedia(res.thumb.sizes.thumbnail.url);
+          setThumb(res.thumb);
         }
         setItem(res);
       } catch (e) {
@@ -51,11 +52,15 @@ const Detail = () => {
         <section className="grid grid-cols-12 pt-4 gap-4 pb-10">
           {/* img section  */}
           <div className="h-[25rem] md:h-[35rem] col-span-12 lg:col-span-4">
-            <img
-              src={media || "/Logo_Newesis_ok.png"}
-              alt={item.title}
-              className="rounded-xl"
-            />
+            {thumb ? (
+              <Picture thumb={thumb} />
+            ) : (
+              <img
+                src="/Logo_Newesis_ok.png"
+                alt={item.title}
+                className="rounded-xl"
+              />
+            )}
           </div>
 
           {/* summary section  */}
