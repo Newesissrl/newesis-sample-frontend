@@ -26,8 +26,7 @@ COPY ./probes /app/probes/
 
 COPY ./docker-entrypoint /docker-entrypoint/
 COPY ./docker-entrypoint.sh /docker-entrypoint/
-RUN chmod +x /docker-entrypoint/docker-entrypoint.sh && \
-    chmod +x /docker-entrypoint/env.sh
+RUN chmod +x /docker-entrypoint/docker-entrypoint.sh
 
 RUN yarn add serve
 COPY ./package.json /app/
