@@ -26,6 +26,7 @@ const ToastMsg = ({ msg, locale }) => {
                 msg.content.en ||
                 msg.content.it ||
                 "Sorry, missing locale and default language message",
+              true,
             )}
           </div>
           {msg.destinationURL && (
