@@ -75,7 +75,7 @@ const Detail = () => {
                   b.columns.map((c) => {
                     return (
                       <div key={c.id} className="body-cols">
-                        {ReactHtmlParser(c.serialized.html)}
+                        {ReactHtmlParser(c.serialized.html, true)}
                       </div>
                     );
                   })
