@@ -12,7 +12,7 @@ const Card = ({ item }) => {
         <img
           src={
             item.thumb
-              ? item.thumb.sizes.thumbnail.url
+              ? item.thumb.sizes.thumbnail.url.replace('mzinga.io/uploads/', 'mzinga.io/cdn-cgi/image/fit=crop,g=auto,f=auto/uploads/')
               : "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
           }
           alt={item.title}

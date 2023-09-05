@@ -21,9 +21,9 @@ const Detail = () => {
       try {
         const res = await API.fetchSingleAsJson("stories", locale, id);
         if (res.body.length > 1 && res.body[1]?.media) {
-          setMedia(res.body[1]?.media.sizes.portrait.url);
+          setMedia(res.body[1]?.media.sizes.portrait.url.replace('mzinga.io/uploads/', 'mzinga.io/cdn-cgi/image/fit=crop,g=auto,f=auto/uploads/'));
         } else if (res.thumb) {
-          setMedia(res.thumb.sizes.thumbnail.url);
+          setMedia(res.thumb.sizes.thumbnail.url.replace('mzinga.io/uploads/', 'mzinga.io/cdn-cgi/image/fit=crop,g=auto,f=auto/uploads/'));
         }
         setItem(res);
       } catch (e) {
@@ -44,7 +44,7 @@ const Detail = () => {
             <meta name="description" content={item.meta.description} />
           )}
           {item.meta.image && (
-            <meta property="og:image" content={item.meta.image.url} />
+            <meta property="og:image" content={item.meta.image.url.replace('mzinga.io/uploads/', 'mzinga.io/cdn-cgi/image/fit=crop,g=auto,f=auto/uploads/')} />
           )}
         </Helmet>
         <h1 className="text-5xl font-bold pt-8 pb-8">{item.title}</h1>
