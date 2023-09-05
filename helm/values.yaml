@@ -4,6 +4,7 @@ tenant:
   tier: "pro"
   site: 
     title: "Newesis Srl – DevOps and Cloud Engineering Services – Be Professional Have Fun !"
+    titleSuffix: "Newesis Srl - Be Professional Have Fun !"
     description: "Newesis Srl Corporate Web Site – DevOps and Cloud Engineering Services – DevOps as a Service – Managed Kubernetes Platform"
 nodePool:
   # priority: "Spot" # To be set to force deployment in spot instances

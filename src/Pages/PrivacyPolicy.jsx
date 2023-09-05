@@ -3,6 +3,7 @@ import qs from "qs";
 import API from "../utils/api";
 import ReactHtmlParser from "react-html-parser";
 import { Helmet } from "react-helmet";
+import { titleSuffix } from "../utils/titleHelper";
 
 export default function PrivacyPolicy() {
   const [item, setItem] = useState(null);
@@ -30,7 +31,7 @@ export default function PrivacyPolicy() {
       <React.Fragment>
         <Helmet>
           <title>
-            Privacy Policy | Newesis Srl &#8211; Be Professional Have Fun !
+            Privacy Policy |  { titleSuffix }
           </title>
         </Helmet>
         <h1 className="text-5xl font-bold pt-8 pb-8">Privacy policy</h1>

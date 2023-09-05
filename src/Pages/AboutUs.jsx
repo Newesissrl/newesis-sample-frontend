@@ -3,6 +3,7 @@ import qs from "qs";
 import API from "../utils/api";
 import ReactHtmlParser from "react-html-parser";
 import { Helmet } from "react-helmet";
+import { titleSuffix } from "../utils/titleHelper";
 
 export default function AboutUs() {
   const [item, setItem] = useState(null);
@@ -42,7 +43,7 @@ export default function AboutUs() {
       <React.Fragment>
         <Helmet>
           <title>
-            {item.title} | Newesis Srl &#8211; Be Professional Have Fun !
+            {item.title} | { titleSuffix }
           </title>
           {item.meta.description && (
             <meta name="description" content={item.meta.description} />

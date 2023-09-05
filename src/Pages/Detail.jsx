@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import dayjs from "dayjs";
 import Picture from "../components/Picture";
+import { titleSuffix } from "../utils/titleHelper";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -40,7 +41,7 @@ const Detail = () => {
       <React.Fragment>
         <Helmet>
           <title>
-            {item.title} | Newesis Srl &#8211; Be Professional Have Fun !
+            {item.title} | { titleSuffix }
           </title>
           {item.meta.description && (
             <meta name="description" content={item.meta.description} />
