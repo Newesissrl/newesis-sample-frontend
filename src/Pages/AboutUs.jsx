@@ -77,7 +77,7 @@ export default function AboutUs() {
                   b.columns.map((c) => {
                     return (
                       <div key={c.id} className="body-cols">
-                        {ReactHtmlParser(c.serialized.html)}
+                        {ReactHtmlParser(c.serialized.html, true)}
                       </div>
                     );
                   }),
@@ -87,7 +87,7 @@ export default function AboutUs() {
                 render.push(
                   <div key={b.id} className="body-medias">
                     <div className="text-xl">
-                      {ReactHtmlParser(b.video.excerpt)}
+                      {ReactHtmlParser(b.video.excerpt, true)}
                     </div>
                     <video controls>
                       <source src={b.video.url} type={b.video.mimeType} />

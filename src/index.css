@@ -63,3 +63,14 @@ form textarea {
 .Toastify__toast-container {
   min-width: 50%;
 }
+
+.body-cols p {
+  @apply mb-4;
+}
+
+.body-cols ul {
+  @apply ml-4;
+}
+  .body-cols li{
+  @apply mb-2 list-disc;
+}
