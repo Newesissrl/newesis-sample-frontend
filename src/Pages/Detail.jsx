@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import qs from "qs";
 import API from "../utils/api";
+import pictureHelper from "../utils/pictureHelper";
 import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -13,7 +14,7 @@ dayjs.extend(relativeTime);
 
 const Detail = () => {
   const [item, setItem] = useState(null);
-  const [thumb, setThumb] = useState(false);
+  const [media, setMedia] = useState(false);
   let { id } = useParams();
   const locale = (qs.parse(window.location.search) || {}).locale || "en";
   // fetch data when page load
@@ -22,9 +23,9 @@ const Detail = () => {
       try {
         const res = await API.fetchSingleAsJson("stories", locale, id);
         if (res.body.length > 1 && res.body[1]?.media) {
-          setThumb(res.body[1]?.media.sizes.portrait.url);
+          setMedia(res.body[1]?.media);
         } else if (res.thumb) {
-          setThumb(res.thumb);
+          setMedia(res.thumb);
         }
         setItem(res);
       } catch (e) {
@@ -45,15 +46,21 @@ const Detail = () => {
             <meta name="description" content={item.meta.description} />
           )}
           {item.meta.image && (
-            <meta property="og:image" content={item.meta.image.url} />
+            <meta
+              property="og:image"
+              content={pictureHelper.TransformMedia(
+                item.meta.image,
+                "thumbnail",
+              )}
+            />
           )}
         </Helmet>
         <h1 className="text-5xl font-bold pt-8 pb-8">{item.title}</h1>
         <section className="grid grid-cols-12 pt-4 gap-4 pb-10">
           {/* img section  */}
           <div className="h-[25rem] md:h-[35rem] col-span-12 lg:col-span-4">
-            {thumb ? (
-              <Picture thumb={thumb} />
+            {media ? (
+              <Picture thumb={media} />
             ) : (
               <img
                 src="/Logo_Newesis_ok.png"

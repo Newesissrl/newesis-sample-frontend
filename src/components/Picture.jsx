@@ -1,15 +1,17 @@
 import React from "react";
+import pictureHelper from "../utils/pictureHelper";
 
-export default function Picture({ thumb }) {
+export default function Picture({ thumb, title, className }) {
   return (
     <picture>
-      {thumb.sizes.portrait.url && (
-        <source media="(min-width:1024px)" srcSet={thumb.sizes.portrait.url} />
-      )}
-      {thumb.sizes.hero.url && <source srcSet={thumb.sizes.hero.url} />}
+      <source
+        media="(min-width:1024px)"
+        srcSet={pictureHelper.TransformMedia(thumb, "portrait")}
+      />
       <img
-        src={thumb.sizes.hero.url || thumb.sizes.thumbnail.url}
-        alt={thumb.alt || thumb.title}
+        src={pictureHelper.TransformMedia(thumb, "hero")}
+        alt={title}
+        className={className}
         loading="lazy"
       />
     </picture>

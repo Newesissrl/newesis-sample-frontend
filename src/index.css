@@ -71,6 +71,6 @@ form textarea {
 .body-cols ul {
   @apply ml-4;
 }
-  .body-cols li{
+.body-cols li {
   @apply mb-2 list-disc;
 }

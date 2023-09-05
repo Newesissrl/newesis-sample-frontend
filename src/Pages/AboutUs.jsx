@@ -16,9 +16,19 @@ export default function AboutUs() {
           return;
         }
         if (res.body.length > 1 && res.body[1]?.media) {
-          setMedia(res.body[1]?.media.sizes.portrait.url);
+          setMedia(
+            res.body[1]?.media.url.replace(
+              "mzinga.io/uploads/",
+              "mzinga.io/cdn-cgi/image/fit=cover,h=1024,w=768,g=auto,f=auto/uploads/",
+            ),
+          );
         } else if (res.thumb) {
-          setMedia(res.thumb.sizes.thumbnail.url);
+          setMedia(
+            res.thumb.url.replace(
+              "mzinga.io/uploads/",
+              "mzinga.io/cdn-cgi/image/fit=cover,h=320,w=480,g=auto,f=auto/uploads/",
+            ),
+          );
         }
         setItem(res);
       } catch (e) {
@@ -38,7 +48,13 @@ export default function AboutUs() {
             <meta name="description" content={item.meta.description} />
           )}
           {item.meta.image && (
-            <meta property="og:image" content={item.meta.image.url} />
+            <meta
+              property="og:image"
+              content={item.meta.image.url.replace(
+                "mzinga.io/uploads/",
+                "mzinga.io/cdn-cgi/image/fit=cover,h=1080,w=1920,g=auto,f=auto/uploads/",
+              )}
+            />
           )}
         </Helmet>
         <h1 className="text-5xl font-bold pt-8 pb-8">{item.title}</h1>
