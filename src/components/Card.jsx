@@ -2,6 +2,7 @@ import React from "react";
 import { AiOutlineBlock } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Picture from "./Picture";
+import ImagePlaceholder from "./ImagePlaceholder";
 
 const Card = ({ item }) => {
   return (
@@ -11,7 +12,11 @@ const Card = ({ item }) => {
     >
       <div className="h-[20rem] sm:h-[25rem] lg:h-[30rem]">
         {item.thumb ? (
-          <Picture thumb={thumb} title={item.title} className="rounded-md" />
+          <Picture
+            thumb={item.thumb}
+            title={item.title}
+            className="rounded-md"
+          />
         ) : (
           <ImagePlaceholder title={item.title} />
         )}

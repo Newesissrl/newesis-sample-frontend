@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import qs from "qs";
 import API from "../utils/api";
+import pictureHelper from "../utils/pictureHelper";
 import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import dayjs from "dayjs";
+import Picture from "../components/Picture";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -21,19 +23,9 @@ const Detail = () => {
       try {
         const res = await API.fetchSingleAsJson("stories", locale, id);
         if (res.body.length > 1 && res.body[1]?.media) {
-          setMedia(
-            res.body[1]?.media.sizes.portrait.url.replace(
-              "mzinga.io/uploads/",
-              "mzinga.io/cdn-cgi/image/fit=cover,h=500,w=500,g=auto,f=auto/uploads/",
-            ),
-          );
+          setMedia(res.body[1]?.media);
         } else if (res.thumb) {
-          setMedia(
-            res.thumb.sizes.thumbnail.url.replace(
-              "mzinga.io/uploads/",
-              "mzinga.io/cdn-cgi/image/fit=cover,h=500,w=500,g=auto,f=auto/uploads/",
-            ),
-          );
+          setMedia(res.thumb);
         }
         setItem(res);
       } catch (e) {
@@ -56,9 +48,9 @@ const Detail = () => {
           {item.meta.image && (
             <meta
               property="og:image"
-              content={item.meta.image.url.replace(
-                "mzinga.io/uploads/",
-                "mzinga.io/cdn-cgi/image/fit=cover,h=500,w=500,g=auto,f=auto/uploads/",
+              content={pictureHelper.TransformMedia(
+                item.meta.image,
+                "thumbnail",
               )}
             />
           )}
@@ -67,11 +59,15 @@ const Detail = () => {
         <section className="grid grid-cols-12 pt-4 gap-4 pb-10">
           {/* img section  */}
           <div className="h-[25rem] md:h-[35rem] col-span-12 lg:col-span-4">
-            <img
-              src={media || "/Logo_Newesis_ok.png"}
-              alt={item.title}
-              className="rounded-xl"
-            />
+            {media ? (
+              <Picture thumb={media} />
+            ) : (
+              <img
+                src="/Logo_Newesis_ok.png"
+                alt={item.title}
+                className="rounded-xl"
+              />
+            )}
           </div>
 
           {/* summary section  */}
@@ -86,7 +82,7 @@ const Detail = () => {
                   b.columns.map((c) => {
                     return (
                       <div key={c.id} className="body-cols">
-                        {ReactHtmlParser(c.serialized.html)}
+                        {ReactHtmlParser(c.serialized.html, true)}
                       </div>
                     );
                   })
