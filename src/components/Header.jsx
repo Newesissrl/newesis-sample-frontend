@@ -7,7 +7,11 @@ export default function Header() {
         <div className="lg:col-span-3 px-2 sm:px-0">
           <div id="banner" className="flex items-start">
             <a href="/">
-              <img src="/Site_Logo.png" alt="Mzinga.io - powered by Newesis Srl" className="center" />
+              <img
+                src="/Site_Logo.png"
+                alt="Mzinga.io - powered by Newesis Srl"
+                className="center"
+              />
             </a>
           </div>
         </div>

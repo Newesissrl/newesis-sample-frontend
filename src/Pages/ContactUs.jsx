@@ -78,9 +78,7 @@ export default function ContactUs() {
   return (
     <React.Fragment>
       <Helmet>
-        <title>
-          Contact Us | { titleSuffix }
-        </title>
+        <title>Contact Us | {titleSuffix}</title>
       </Helmet>
       <h1 className="text-5xl font-bold pt-8 pb-8">Contact Us</h1>
       {item && (

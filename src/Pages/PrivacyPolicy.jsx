@@ -30,9 +30,7 @@ export default function PrivacyPolicy() {
     item && (
       <React.Fragment>
         <Helmet>
-          <title>
-            Privacy Policy |  { titleSuffix }
-          </title>
+          <title>Privacy Policy | {titleSuffix}</title>
         </Helmet>
         <h1 className="text-5xl font-bold pt-8 pb-8">Privacy policy</h1>
         <section className="pt-4 pb-10">

@@ -43,7 +43,7 @@ export default function AboutUs() {
       <React.Fragment>
         <Helmet>
           <title>
-            {item.title} | { titleSuffix }
+            {item.title} | {titleSuffix}
           </title>
           {item.meta.description && (
             <meta name="description" content={item.meta.description} />
