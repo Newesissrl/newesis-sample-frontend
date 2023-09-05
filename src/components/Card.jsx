@@ -14,7 +14,7 @@ const Card = ({ item }) => {
             item.thumb
               ? item.thumb.sizes.thumbnail.url.replace(
                   "mzinga.io/uploads/",
-                  "mzinga.io/cdn-cgi/image/fit=crop,g=auto,f=auto/uploads/",
+                  "mzinga.io/cdn-cgi/image/fit=cover,h=500,w=500,g=auto,f=auto/uploads/",
                 )
               : "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg"
           }
