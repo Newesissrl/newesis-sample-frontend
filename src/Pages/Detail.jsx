@@ -63,7 +63,7 @@ const Detail = () => {
               <Picture thumb={media} />
             ) : (
               <img
-                src="/Logo_Newesis_ok.png"
+                src="/Image_Placeholder.png"
                 alt={item.title}
                 className="rounded-xl"
               />

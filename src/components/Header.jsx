@@ -8,7 +8,7 @@ export default function Header() {
           <div id="banner" className="flex items-start">
             <a href="/">
               <img
-                src="/Logo_Newesis_ok_BN_Nero.png"
+                src="/Site_Logo.png"
                 alt="newesis"
                 className="center"
               />

@@ -37,6 +37,12 @@ spec:
               value: https://api-{{ .Values.tenant.name }}.{{ .Values.basedns }}
             - name: REACT_APP_WS_BASE_URL
               value: "wss://ws-{{ .Values.tenant.name }}.{{ .Values.basedns }}"
+            - name: TENANT
+              value: {{ .Values.tenant.name }}
+            - name: TITLE
+              value: {{ .Values.tenant.site.title }}
+            - name: DESCRIPTION
+              value: {{ .Values.tenant.site.description }}
 ---
 apiVersion: v1
 kind: Service

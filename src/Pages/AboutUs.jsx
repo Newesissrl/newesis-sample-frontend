@@ -61,7 +61,7 @@ export default function AboutUs() {
         <section className="grid grid-cols-12 pt-4 gap-4 pb-10">
           <div className="h-[25rem] md:h-[35rem] col-span-12 lg:col-span-4">
             <img
-              src={media || "/Logo_Newesis_ok.png"}
+              src={media || "/Image_Placeholder.png"}
               alt={item.title}
               className="rounded-xl"
             />
