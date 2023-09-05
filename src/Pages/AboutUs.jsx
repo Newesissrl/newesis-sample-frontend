@@ -17,16 +17,16 @@ export default function AboutUs() {
         }
         if (res.body.length > 1 && res.body[1]?.media) {
           setMedia(
-            res.body[1]?.media.sizes.portrait.url.replace(
+            res.body[1]?.media.url.replace(
               "mzinga.io/uploads/",
-              "mzinga.io/cdn-cgi/image/fit=cover,h=500,w=500,g=auto,f=auto/uploads/",
+              "mzinga.io/cdn-cgi/image/fit=cover,h=1024,w=768,g=auto,f=auto/uploads/",
             ),
           );
         } else if (res.thumb) {
           setMedia(
-            res.thumb.sizes.thumbnail.url.replace(
+            res.thumb.url.replace(
               "mzinga.io/uploads/",
-              "mzinga.io/cdn-cgi/image/fit=cover,h=500,w=500,g=auto,f=auto/uploads/",
+              "mzinga.io/cdn-cgi/image/fit=cover,h=320,w=480,g=auto,f=auto/uploads/",
             ),
           );
         }
@@ -52,7 +52,7 @@ export default function AboutUs() {
               property="og:image"
               content={item.meta.image.url.replace(
                 "mzinga.io/uploads/",
-                "mzinga.io/cdn-cgi/image/fit=cover,h=500,w=500,g=auto,f=auto/uploads/",
+                "mzinga.io/cdn-cgi/image/fit=cover,h=1080,w=1920,g=auto,f=auto/uploads/",
               )}
             />
           )}
