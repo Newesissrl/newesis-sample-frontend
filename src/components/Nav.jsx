@@ -10,8 +10,8 @@ export default function Nav() {
         <li className="pl-4">
           <a href="/about-us">About Us</a>
         </li>
-        </ul>
-        <ul className="mt-4 flex lg:justify-end px-4 sm:px-0">
+      </ul>
+      <ul className="mt-4 flex lg:justify-end px-4 sm:px-0">
         <li className="pl-4">
           <a href="/contact-us">Contact Us</a>
         </li>

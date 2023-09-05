@@ -10,7 +10,7 @@ export default function Header() {
               <img
                 src="/Site_Logo.png"
                 alt="Mzinga.io - powered by Newesis Srl"
-                className="center" 
+                className="center"
               />
             </a>
           </div>
