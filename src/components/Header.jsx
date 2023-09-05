@@ -5,12 +5,12 @@ export default function Header() {
     <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 border-b-2 border-sky-400 pb-4">
       <div className="2xl:col-start-3 lg:col-start-2 2xl:col-span-8 lg:col-span-10 grid lg:grid-cols-12">
         <div className="lg:col-span-3 px-2 sm:px-0">
-          <div id="banner" className="flex items-start">
+          <div id="banner" className="flex items-center">
             <a href="/">
               <img
                 src="/Site_Logo.png"
                 alt="Mzinga.io - powered by Newesis Srl"
-                className="center"
+                className="center" 
               />
             </a>
           </div>
