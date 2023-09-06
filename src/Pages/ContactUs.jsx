@@ -4,7 +4,7 @@ import API from "../utils/api";
 import { Helmet } from "react-helmet";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { titleSuffix } from "../utils/titleHelper";
+import { titleSuffix } from "../utils/contentFilterHelper";
 
 const ToastMsg = ({ item }) => {
   return (

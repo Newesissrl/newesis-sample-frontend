@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import dayjs from "dayjs";
 import Picture from "../components/Picture";
-import { titleSuffix } from "../utils/titleHelper";
+import { titleSuffix } from "../utils/contentFilterHelper";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 

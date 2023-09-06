@@ -39,6 +39,14 @@ spec:
               value: "wss://ws-{{ .Values.tenant.name }}.{{ .Values.basedns }}"
             - name: REACT_APP_TITLE_SUFFIX
               value: {{ .Values.tenant.site.titleSuffix }}
+            - name: REACT_APP_TOP_CARD_LIST_TITLE
+              value: {{ .Values.tenant.site.topCardList.title }}
+            - name: REACT_APP_TOP_CARD_LIST_TAG
+              value: {{ .Values.tenant.site.topCardList.tag }}
+            - name: REACT_APP_BOTTOM_CARD_LIST_TITLE
+              value: {{ .Values.tenant.site.bottomCardList.title }}
+            - name: REACT_APP_BOTTOM_CARD_LIST_TAG
+              value: {{ .Values.tenant.site.bottomCardList.tag }}
             - name: TENANT
               value: {{ .Values.tenant.name }}
             - name: TITLE

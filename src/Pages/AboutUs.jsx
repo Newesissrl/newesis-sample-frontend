@@ -3,7 +3,7 @@ import qs from "qs";
 import API from "../utils/api";
 import ReactHtmlParser from "react-html-parser";
 import { Helmet } from "react-helmet";
-import { titleSuffix } from "../utils/titleHelper";
+import { titleSuffix } from "../utils/contentFilterHelper";
 
 export default function AboutUs() {
   const [item, setItem] = useState(null);
