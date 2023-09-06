@@ -6,7 +6,6 @@ jobs:
 
   gitversion:
     runs-on: ubuntu-latest
-    environment: newesis-frontend
     if: "!contains(github.event.head_commit.message, '[skip build]')"
     steps:
     - uses: actions/checkout@v3
@@ -69,7 +68,6 @@ jobs:
 
   build-and-push-image:
     runs-on: ubuntu-latest
-    environment: newesis-frontend
     needs: gitversion
     if: "!contains(github.event.head_commit.message, '[skip build]')"
     steps:
