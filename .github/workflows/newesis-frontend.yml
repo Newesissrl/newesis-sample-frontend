@@ -1,13 +1,13 @@
-name: Create and publishthe Container Image and Deploy to Newesis Frontend
+name: Create and publish the Container Image and Deploy to Newesis Cluster
 on:
   push:
-    branches: ['main']
 
 jobs:
 
   gitversion:
     runs-on: ubuntu-latest
     environment: newesis-frontend
+    if: "!contains(github.event.head_commit.message, '[skip build]')"
     steps:
     - uses: actions/checkout@v3
       with: 
@@ -71,6 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: newesis-frontend
     needs: gitversion
+    if: "!contains(github.event.head_commit.message, '[skip build]')"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -80,14 +81,19 @@ jobs:
           login-server: ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}
           username: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_USERNAME }}
           password: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_PASSWORD }}
-      - name: Build and push Docker image
+      - name: Build Docker image
         run: |
           docker build . -t ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
+      - name: Push Docker image
+        if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
+        run: |
           docker push ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
+
   tagRepo:
     runs-on: ubuntu-latest
     environment: newesis-frontend
     needs: [gitversion, build-and-push-image]
+    if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -104,6 +110,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: newesis-frontend
     needs: [gitversion, build-and-push-image]
+    if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
     steps:
       - uses: actions/checkout@v3
       - name: Azure CLI script
@@ -129,6 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: newesis-frontend
     needs: [gitversion, build-and-push-image]
+    if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
     steps:
       - uses: actions/checkout@v3
       - name: Azure CLI script
