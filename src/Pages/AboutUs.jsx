@@ -3,6 +3,7 @@ import qs from "qs";
 import API from "../utils/api";
 import ReactHtmlParser from "react-html-parser";
 import { Helmet } from "react-helmet";
+import { titleSuffix } from "../utils/contentFilterHelper";
 
 export default function AboutUs() {
   const [item, setItem] = useState(null);
@@ -42,7 +43,7 @@ export default function AboutUs() {
       <React.Fragment>
         <Helmet>
           <title>
-            {item.title} | Newesis Srl &#8211; Be Professional Have Fun !
+            {item.title} | {titleSuffix}
           </title>
           {item.meta.description && (
             <meta name="description" content={item.meta.description} />
@@ -61,7 +62,7 @@ export default function AboutUs() {
         <section className="grid grid-cols-12 pt-4 gap-4 pb-10">
           <div className="h-[25rem] md:h-[35rem] col-span-12 lg:col-span-4">
             <img
-              src={media || "/Logo_Newesis_ok.png"}
+              src={media || "/Image_Placeholder.png"}
               alt={item.title}
               className="rounded-xl"
             />

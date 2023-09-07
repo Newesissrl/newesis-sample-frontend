@@ -1,21 +1,28 @@
 import React from "react";
 import CardList from "../components/CardList";
+import {
+  topCardListTitle,
+  topCardListTag,
+  bottomCardListTitle,
+  bottomCardListTag,
+} from "../utils/contentFilterHelper";
+
 const Homepage = () => {
   return (
     <React.Fragment>
       <CardList
-        title="Our Services"
+        title={topCardListTitle}
         query={{
           "tags.slug": {
-            in: "services",
+            in: topCardListTag,
           },
         }}
       />
       <CardList
-        title="Our People"
+        title={bottomCardListTitle}
         query={{
           "tags.slug": {
-            in: "people",
+            in: bottomCardListTag,
           },
         }}
       />

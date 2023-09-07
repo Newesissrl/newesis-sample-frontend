@@ -2,6 +2,16 @@ basedns: "mzinga.io"
 tenant:
   name: "newesiscorporate"
   tier: "pro"
+  site: 
+    title: "Newesis Srl – DevOps and Cloud Engineering Services – Be Professional Have Fun !"
+    titleSuffix: "Newesis Srl - Be Professional Have Fun !"
+    description: "Newesis Srl Corporate Web Site – DevOps and Cloud Engineering Services – DevOps as a Service – Managed Kubernetes Platform"
+    topCardList:
+      title: "Our Services"
+      tag: "services"
+    bottomCardList:
+      title: "Our People"
+      tag: "people"
 nodePool:
   # priority: "Spot" # To be set to force deployment in spot instances
   spot:

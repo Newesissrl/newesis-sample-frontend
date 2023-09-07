@@ -31,5 +31,7 @@ RUN chmod +x /docker-entrypoint/docker-entrypoint.sh
 RUN yarn add serve
 COPY ./package.json /app/
 
+EXPOSE 3000/tcp
+
 ENTRYPOINT ["/docker-entrypoint/docker-entrypoint.sh"]
 CMD ["yarn", "serve", "-s", "build"]

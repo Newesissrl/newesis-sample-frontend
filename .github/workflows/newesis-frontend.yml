@@ -1,13 +1,12 @@
-name: Create and publishthe Container Image and Deploy to Newesis Frontend
+name: Create and publish the Container Image and Deploy to Newesis Cluster
 on:
   push:
-    branches: ['main']
 
 jobs:
 
   gitversion:
     runs-on: ubuntu-latest
-    environment: newesis-frontend
+    if: "!contains(github.event.head_commit.message, '[skip build]')"
     steps:
     - uses: actions/checkout@v3
       with: 
@@ -69,8 +68,8 @@ jobs:
 
   build-and-push-image:
     runs-on: ubuntu-latest
-    environment: newesis-frontend
     needs: gitversion
+    if: "!contains(github.event.head_commit.message, '[skip build]')"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -80,14 +79,19 @@ jobs:
           login-server: ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}
           username: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_USERNAME }}
           password: ${{ secrets.NEWESIS_CONTAINER_REGISTRY_PASSWORD }}
-      - name: Build and push Docker image
+      - name: Build Docker image
         run: |
           docker build . -t ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
+      - name: Push Docker image
+        if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
+        run: |
           docker push ${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}:${{ needs.gitversion.outputs.tagVersion }}
+
   tagRepo:
     runs-on: ubuntu-latest
     environment: newesis-frontend
     needs: [gitversion, build-and-push-image]
+    if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -104,6 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: newesis-frontend
     needs: [gitversion, build-and-push-image]
+    if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
     steps:
       - uses: actions/checkout@v3
       - name: Azure CLI script
@@ -120,3 +125,29 @@ jobs:
             az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }} --admin
             helm dependency build ${{ vars.CHART_PATH }}
             helm upgrade -i -n ${{ vars.DEPLOY_NAMESPACE }} --create-namespace newesis-frontend ${{ vars.CHART_PATH }} --set sampleFrontend.imageTag=${{ needs.gitversion.outputs.tagVersion }},sampleFrontend.image=${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}
+
+  deployMzingaFE:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    environment: newesis-frontend
+    needs: [gitversion, build-and-push-image]
+    if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+            chmod 700 get_helm.sh
+            ./get_helm.sh
+            az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+            az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+            az aks install-cli
+            az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }} --admin
+            helm dependency build ${{ vars.CHART_PATH }}
+            helm upgrade -i -n ${{ vars.MZINGA_DEPLOY_NAMESPACE }} --create-namespace mzinga-frontend ${{ vars.CHART_PATH }} --set sampleFrontend.imageTag=${{ needs.gitversion.outputs.tagVersion }},sampleFrontend.image=${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }},sampleFrontend.hostName="sample-frontend-mzinga.mzinga.io",tenant.name=mzinga,tenant.site.title="Mzinga.io - Your Data API - by Newesis srl",tenant.site.description="Mzinga.io - HeadlessCMS - Backend as a Service",tenant.site.titleSuffix="Mzinga.io by Newesis Srl",tenant.site.topCardList.title="Mzinga.io Product",tenant.site.bottomCardList.title="Mzinga.io Services",tenant.site.topCardList.tag="product",tenant.site.bottomCardList.tag="services"
