@@ -70,7 +70,7 @@ spec:
               periodSeconds: 90
               successThreshold: 1
               failureThreshold: 3
-            readinessProbe:
+          readinessProbe:
               httpGet:
                 path: /probes/ready
                 port: 3000
