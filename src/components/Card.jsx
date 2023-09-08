@@ -21,7 +21,7 @@ const Card = ({ item }) => {
           <ImagePlaceholder title={item.title} />
         )}
       </div>
-      <h1 className="text-center py-2 text-xl">{item.title}</h1>
+      <h2 className="text-center py-2 text-xl">{item.title}</h2>
       <div className="absolute top-2 left-2 bg-blue rounded-full px-2 py-1 text-sm flex items-center gap-1">
         <span>{item.slug || "test"}</span>
         <AiOutlineBlock className="text-lg" />
