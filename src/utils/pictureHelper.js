@@ -6,10 +6,18 @@ function pictureHelper() {
     );
   };
   const TransformMedia = (media, size) => {
-    console.log(media, size);
-    const { width = 500, height = 500 } =
-      size && media.sizes[size] ? media.sizes[size] : {};
-    return Transform(media.url, width, height);
+    const picture = { width: "500", height: "500" };
+    if (media.sizes[size].width && media.sizes[size].height) {
+      picture.width = media.sizes[size].width;
+      picture.height = media.sizes[size].height;
+    } else if (size === "hero") {
+      picture.width = 1920;
+      picture.height = 1080;
+    } else if (size === "portrait") {
+      picture.width = 768;
+      picture.height = 1024;
+    }
+    return Transform(media.url, picture.width, picture.height);
   };
   return {
     Transform,
