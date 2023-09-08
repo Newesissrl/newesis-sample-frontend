@@ -3,9 +3,9 @@ export default function Footer() {
   return (
     <footer className="grid lg:grid-cols-12 gap-4 border-t-2 border-sky-400 mt-8 lg:mt-20 pt-2 pb-8 bg-white text-black">
       <div className="lg:col-start-3 lg:col-span-8 grid lg:grid-cols-12">
-        <h4 className="text-xl px-4 lg:px-0 col-span-12 font-bold pt-4 pb-4">
+        <h3 className="text-xl px-4 lg:px-0 col-span-12 font-bold pt-4 pb-4">
           Newesis Srl
-        </h4>
+        </h3>
         <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-4">
           Via Principi d'Acaja, 44
           <br />

@@ -7,6 +7,7 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind colors;
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 @layer base {
   body {
