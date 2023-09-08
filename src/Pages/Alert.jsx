@@ -16,6 +16,7 @@ const ToastMsg = ({ msg, locale }) => {
             <img
               src={API.getUploadsUrl(msg.thumb, "thumbnail")}
               className="roundex-xl"
+              alt=""
             />
           )}
         </div>
