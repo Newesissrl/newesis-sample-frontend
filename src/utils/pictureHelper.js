@@ -1,13 +1,16 @@
 function pictureHelper() {
-  const Transform = (url, width, height) => {
+  const Transform = (url, width, height, gravity, fit, rotate, trim) => {
     return url.replace(
-      "mzinga.io/uploads/",
-      `mzinga.io/cdn-cgi/image/fit=cover,h=${height},w=${width},g=auto,f=auto/uploads/`,
+      "/uploads/media",
+      `/cdn-cgi/image/h=${height},w=${width},g=${gravity},fit=${fit},rotate=${rotate},trim=${trim}/uploads/media`,
     );
   };
   const TransformMedia = (media, size) => {
-    const picture = { width: "500", height: "500" };
-    if (media.sizes[size].width && media.sizes[size].height) {
+    const picture = { width: 500, height: 500 };
+    if (size === "original") {
+      picture.width = media.width;
+      picture.height = media.height;
+    } else if (media.sizes[size].width && media.sizes[size].height) {
       picture.width = media.sizes[size].width;
       picture.height = media.sizes[size].height;
     } else if (size === "hero") {
@@ -16,8 +19,19 @@ function pictureHelper() {
     } else if (size === "portrait") {
       picture.width = 768;
       picture.height = 1024;
+    } else if (size === "thumbnail") {
+      picture.width = 480;
+      picture.height = 320;
     }
-    return Transform(media.url, picture.width, picture.height);
+    return Transform(
+      media.url,
+      picture.width,
+      picture.height,
+      media.gravity,
+      media.fit,
+      media.rotate,
+      media.trim,
+    );
   };
   return {
     Transform,
