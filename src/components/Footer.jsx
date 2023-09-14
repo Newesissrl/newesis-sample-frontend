@@ -10,7 +10,7 @@ export default function Footer() {
           Via Principi d'Acaja, 44
           <br />
           10138 Torino Italy <br />
-          +39 335 13 40 00
+          +39 011 1962 0569
         </div>
         <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-4 lg:text-center">
           PIVA 12028300015
