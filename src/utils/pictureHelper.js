@@ -1,8 +1,8 @@
 function pictureHelper() {
-  const Transform = (url, width, height, gravity, fit, rotate, trim) => {
+  const Transform = (url, width, height, gravity, fit, rotate, trim, background) => {
     return url.replace(
       "/uploads/media",
-      `/cdn-cgi/image/h=${height},w=${width},g=${gravity},fit=${fit},rotate=${rotate},trim=${trim}/uploads/media`,
+      `/cdn-cgi/image/h=${height},w=${width},g=${gravity},fit=${fit},rotate=${rotate},trim=${trim},background=${background}/uploads/media`,
     );
   };
   const TransformMedia = (media, size) => {
@@ -31,6 +31,7 @@ function pictureHelper() {
       media.fit,
       media.rotate,
       media.trim,
+      media.background
     );
   };
   return {
