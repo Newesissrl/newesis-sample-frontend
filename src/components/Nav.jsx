@@ -1,5 +1,5 @@
 import React from "react";
-import {aboutUsTitle , contactUsTitle} from "../utils/contentFilterHelper";
+import { aboutUsTitle, contactUsTitle } from "../utils/contentFilterHelper";
 export default function Nav() {
   const setLocale = (locale) => {
     window.localStorage.setItem("locale", locale);

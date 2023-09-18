@@ -4,7 +4,11 @@ import API from "../utils/api";
 import { Helmet } from "react-helmet";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { titleSuffix , contactUsTitle , contactUsSlug } from "../utils/contentFilterHelper";
+import {
+  titleSuffix,
+  contactUsTitle,
+  contactUsSlug,
+} from "../utils/contentFilterHelper";
 
 const ToastMsg = ({ item }) => {
   return (
@@ -78,7 +82,9 @@ export default function ContactUs() {
   return (
     <React.Fragment>
       <Helmet>
-        <title>{contactUsTitle} | {titleSuffix}</title>
+        <title>
+          {contactUsTitle} | {titleSuffix}
+        </title>
       </Helmet>
       <h1 className="text-5xl font-bold pt-8 pb-8">{contactUsTitle}</h1>
       {item && (
