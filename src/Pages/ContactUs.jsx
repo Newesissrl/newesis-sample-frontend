@@ -4,7 +4,11 @@ import API from "../utils/api";
 import { Helmet } from "react-helmet";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { titleSuffix } from "../utils/contentFilterHelper";
+import {
+  titleSuffix,
+  contactUsTitle,
+  contactUsSlug,
+} from "../utils/contentFilterHelper";
 
 const ToastMsg = ({ item }) => {
   return (
@@ -66,7 +70,7 @@ export default function ContactUs() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await API.fetchBySlugAsJson("forms", locale, "contact-us");
+        const res = await API.fetchBySlugAsJson("forms", locale, contactUsSlug);
 
         setItem(res);
       } catch (e) {
@@ -78,9 +82,11 @@ export default function ContactUs() {
   return (
     <React.Fragment>
       <Helmet>
-        <title>Contact Us | {titleSuffix}</title>
+        <title>
+          {contactUsTitle} | {titleSuffix}
+        </title>
       </Helmet>
-      <h1 className="text-5xl font-bold pt-8 pb-8">Contact Us</h1>
+      <h1 className="text-5xl font-bold pt-8 pb-8">{contactUsTitle}</h1>
       {item && (
         <form className="form" onSubmit={handleSubmit}>
           {item.fields.map((field) => {
