@@ -47,6 +47,14 @@ spec:
               value: {{ .Values.tenant.site.bottomCardList.title }}
             - name: REACT_APP_BOTTOM_CARD_LIST_TAG
               value: {{ .Values.tenant.site.bottomCardList.tag }}
+            - name: REACT_APP_ABOUT_US_TITLE
+              value: {{ .Values.tenant.site.aboutUs.title }}
+            - name: REACT_APP_ABOUT_US_SLUG
+              value: {{ .Values.tenant.site.aboutUs.slug }}
+            - name: REACT_APP_CONTACT_US_TITLE
+              value: {{ .Values.tenant.site.contactUs.title }}
+            - name: REACT_APP_CONTACT_US_SLUG
+              value: {{ .Values.tenant.site.contactUs.slug }}
             - name: TENANT
               value: {{ .Values.tenant.name }}
             - name: TITLE
