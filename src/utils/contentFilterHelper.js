@@ -43,7 +43,7 @@ export const formPageUri =
   (window._env_ || {}).REACT_APP_FORM_PAGE_URI ||
   "/contact-us";
 
-  export const formPageTitle =
+export const formPageTitle =
   process.env.REACT_APP_FORM_PAGE_TITLE ||
   (window._env_ || {}).REACT_APP_FORM_PAGE_TITLE ||
   "Contact Us";

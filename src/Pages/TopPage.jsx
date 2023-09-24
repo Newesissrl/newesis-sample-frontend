@@ -22,20 +22,14 @@ export default function AboutUs() {
           setMedia(
             res.body[1]?.media.url.replace(
               res.body[1]?.media.url,
-              (pictureHelper.TransformMedia(
-                res.thumb,
-                "original",
-              )),
+              pictureHelper.TransformMedia(res.thumb, "original"),
             ),
           );
         } else if (res.thumb) {
           setMedia(
             res.thumb.url.replace(
               res.thumb.url,
-              (pictureHelper.TransformMedia(
-                res.thumb,
-                "thumbnail",
-              )),
+              pictureHelper.TransformMedia(res.thumb, "thumbnail"),
             ),
           );
         }

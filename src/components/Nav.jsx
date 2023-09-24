@@ -1,5 +1,10 @@
 import React from "react";
-import { topPageUri, topPageTitle, formPageUri, formPageTitle } from "../utils/contentFilterHelper";
+import {
+  topPageUri,
+  topPageTitle,
+  formPageUri,
+  formPageTitle,
+} from "../utils/contentFilterHelper";
 export default function Nav() {
   const setLocale = (locale) => {
     window.localStorage.setItem("locale", locale);
