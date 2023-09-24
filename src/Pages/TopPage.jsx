@@ -3,7 +3,8 @@ import qs from "qs";
 import API from "../utils/api";
 import ReactHtmlParser from "react-html-parser";
 import { Helmet } from "react-helmet";
-import { titleSuffix, aboutUsSlug } from "../utils/contentFilterHelper";
+import pictureHelper from "../utils/pictureHelper";
+import { titleSuffix, topPageSlug } from "../utils/contentFilterHelper";
 
 export default function AboutUs() {
   const [item, setItem] = useState(null);
@@ -12,22 +13,23 @@ export default function AboutUs() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await API.fetchBySlugAsJson("stories", locale, aboutUsSlug);
+        const res = await API.fetchBySlugAsJson("stories", locale, topPageSlug);
         if (!res) {
           return;
         }
+
         if (res.body.length > 1 && res.body[1]?.media) {
           setMedia(
             res.body[1]?.media.url.replace(
-              "mzinga.io/uploads/",
-              "mzinga.io/cdn-cgi/image/fit=cover,h=1024,w=768,g=auto,f=auto/uploads/",
+              res.body[1]?.media.url,
+              pictureHelper.TransformMedia(res.thumb, "original"),
             ),
           );
         } else if (res.thumb) {
           setMedia(
             res.thumb.url.replace(
-              "mzinga.io/uploads/",
-              "mzinga.io/cdn-cgi/image/fit=cover,h=320,w=480,g=auto,f=auto/uploads/",
+              res.thumb.url,
+              pictureHelper.TransformMedia(res.thumb, "thumbnail"),
             ),
           );
         }
@@ -51,9 +53,9 @@ export default function AboutUs() {
           {item.meta.image && (
             <meta
               property="og:image"
-              content={item.meta.image.url.replace(
-                "mzinga.io/uploads/",
-                "mzinga.io/cdn-cgi/image/fit=cover,h=1080,w=1920,g=auto,f=auto/uploads/",
+              content={pictureHelper.TransformMedia(
+                item.meta.image,
+                "thumbnail",
               )}
             />
           )}

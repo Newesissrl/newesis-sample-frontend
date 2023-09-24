@@ -23,22 +23,32 @@ export const bottomCardListTag =
   (window._env_ || {}).REACT_APP_BOTTOM_CARD_LIST_TAG ||
   "people";
 
-export const aboutUsTitle =
-  process.env.REACT_APP_ABOUT_US_TITLE ||
-  (window._env_ || {}).REACT_APP_ABOUT_US_TITLE ||
+export const topPageUri =
+  process.env.REACT_APP_TOP_PAGE_URI ||
+  (window._env_ || {}).REACT_APP_TOP_PAGE_URI ||
+  "/about-us";
+
+export const topPageTitle =
+  process.env.REACT_APP_TOP_PAGE_TITLE ||
+  (window._env_ || {}).REACT_APP_TOP_PAGE_TITLE ||
   "About Us";
 
-export const aboutUsSlug =
-  process.env.REACT_APP_ABOUT_US_SLUG ||
-  (window._env_ || {}).REACT_APP_ABOUT_US_SLUG ||
+export const topPageSlug =
+  process.env.REACT_APP_TOP_PAGE_SLUG ||
+  (window._env_ || {}).REACT_APP_TOP_PAGE_SLUG ||
   "about-us";
 
-export const contactUsTitle =
-  process.env.REACT_APP_CONTAT_US_TITLE ||
-  (window._env_ || {}).REACT_APP_CONTACT_US_TITLE ||
+export const formPageUri =
+  process.env.REACT_APP_FORM_PAGE_URI ||
+  (window._env_ || {}).REACT_APP_FORM_PAGE_URI ||
+  "/contact-us";
+
+export const formPageTitle =
+  process.env.REACT_APP_FORM_PAGE_TITLE ||
+  (window._env_ || {}).REACT_APP_FORM_PAGE_TITLE ||
   "Contact Us";
 
-export const contactUsSlug =
-  process.env.REACT_APP_CONTAT_US_SLUG ||
-  (window._env_ || {}).REACT_APP_CONTACT_US_SLUG ||
+export const formPageSlug =
+  process.env.REACT_APP_FORM_PAGE_SLUG ||
+  (window._env_ || {}).REACT_APP_FORM_PAGE_SLUG ||
   "contact-us";
