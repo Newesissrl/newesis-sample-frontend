@@ -6,8 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   titleSuffix,
-  contactUsTitle,
-  contactUsSlug,
+  formPageTitle,
+  formPageSlug,
 } from "../utils/contentFilterHelper";
 
 const ToastMsg = ({ item }) => {
@@ -70,7 +70,7 @@ export default function ContactUs() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await API.fetchBySlugAsJson("forms", locale, contactUsSlug);
+        const res = await API.fetchBySlugAsJson("forms", locale, formPageSlug);
 
         setItem(res);
       } catch (e) {
@@ -83,10 +83,10 @@ export default function ContactUs() {
     <React.Fragment>
       <Helmet>
         <title>
-          {contactUsTitle} | {titleSuffix}
+          {formPageTitle} | {titleSuffix}
         </title>
       </Helmet>
-      <h1 className="text-5xl font-bold pt-8 pb-8">{contactUsTitle}</h1>
+      <h1 className="text-5xl font-bold pt-8 pb-8">{formPageTitle}</h1>
       {item && (
         <form className="form" onSubmit={handleSubmit}>
           {item.fields.map((field) => {

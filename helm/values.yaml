@@ -12,12 +12,14 @@ tenant:
     bottomCardList:
       title: "Our People"
       tag: "people"
-    aboutUs:
+    topPage:
       title: "About Us"
       slug: "about-us"
-    contactUs:
+      uri: "/about-us"
+    formPage:
       title: "Contact Us"
       slug: "contact-us"
+      uri: "/contact-us"
 nodePool:
   # priority: "Spot" # To be set to force deployment in spot instances
   spot:
