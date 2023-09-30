@@ -48,7 +48,7 @@ function AlertModal() {
   const locale = (qs.parse(window.location.search) || {}).locale || "en";
 
   useEffect(() => {
-    socket.on("alert message", (msg) => {
+    socket.on("alerts", (msg) => {
       if (!msg.isPrivate) {
         const type = (msg.alertType?.type || "default").toLowerCase();
         toast.dismiss();
