@@ -7,7 +7,9 @@ elif [[ -z "$TENANT" ]]; then
     echo "Variable TENANT is set to the empty string, default logos will be used"
 else
     echo "Tenant is: $TENANT"
-    cp -v /app/build/$TENANT/* /app/build/
+    if [ -d "/app/build/$TENANT" ]; then
+        cp -v /app/build/$TENANT/* /app/build/
+    fi
 fi
 
 if [[ ! -v TITLE ]]; then
