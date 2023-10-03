@@ -9,7 +9,15 @@ import API from "../utils/api";
 const ToastMsg = ({ msg, locale }) => {
   return (
     <>
-      <h2 className="text-xl font-bold pt-2 pb-4">{msg.title}</h2>
+      <h2 className="text-xl font-bold pt-2 pb-4">
+        {ReactHtmlParser(
+          msg.title[locale] ||
+            msg.title.en ||
+            msg.title.it ||
+            "Sorry, missing locale and default language title",
+          true,
+        )}
+      </h2>
       <section className="grid grid-cols-12 pt-4 gap-4 pb-10">
         <div className="col-span-12 lg:col-span-4">
           {msg.thumb && (
