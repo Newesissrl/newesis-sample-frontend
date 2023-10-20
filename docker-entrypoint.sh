@@ -8,7 +8,7 @@ elif [[ -z "$TENANT" ]]; then
 else
     echo "Tenant is: $TENANT"
     if [ -d "/app/build/$TENANT" ]; then
-        cp -v /app/build/$TENANT/* /app/build/
+        cp -rv /app/build/$TENANT/* /app/build/
     fi
 fi
 
