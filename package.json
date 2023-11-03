@@ -54,6 +54,6 @@
   "devDependencies": {
     "husky": "^8.0.3",
     "prettier": "^3.0.3",
-    "tailwindcss": "^3.3.4"
+    "tailwindcss": "^3.3.5"
   }
 }
