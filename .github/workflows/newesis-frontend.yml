@@ -3,66 +3,65 @@ on:
   push:
 
 jobs:
-
   gitversion:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[skip build]')"
     steps:
-    - uses: actions/checkout@v3
-      with: 
-        fetch-depth: 0
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.10.2
-      with:
-        versionSpec: 5.x
-    - name: Setup netcore
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.x
-    - name: Setup gitversion
-      uses: gittools/actions/gitversion/setup@v0.10.2
-      with:
-        versionSpec: 5.x
-    - name: Determine Version
-      id: setVersion
-      uses: gittools/actions/gitversion/execute@v0.10.2
-      with:
-        useConfigFile: true
-        configFilePath: ${{ github.workspace }}/GitVersion.yml
-    - name: Debug gitversion values
-      run: |
-        echo Major: ${{ env.GitVersion_Major }}
-        echo Minor: ${{ env.GitVersion_Minor }}
-        echo Patch: ${{ env.GitVersion_Patch }}
-        echo PreReleaseTag: ${{ env.GitVersion_PreReleaseTag }}
-        echo PreReleaseTagWithDash: ${{ env.GitVersion_PreReleaseTagWithDash }}
-        echo PreReleaseLabel: ${{ env.GitVersion_PreReleaseLabel }}
-        echo PreReleaseNumber: ${{ env.GitVersion_PreReleaseNumber }}
-        echo WeightedPreReleaseNumber: ${{ env.GitVersion_WeightedPreReleaseNumber }}
-        echo BuildMetaData: ${{ env.GitVersion_BuildMetaData }}
-        echo BuildMetaDataPadded: ${{ env.GitVersion_BuildMetaDataPadded }}
-        echo FullBuildMetaData: ${{ env.GitVersion_FullBuildMetaData }}
-        echo MajorMinorPatch: ${{ env.GitVersion_MajorMinorPatch }}
-        echo SemVer: ${{ env.GitVersion_SemVer }}
-        echo LegacySemVer: ${{ env.GitVersion_LegacySemVer }}
-        echo LegacySemVerPadded: ${{ env.GitVersion_LegacySemVerPadded }}
-        echo AssemblySemVer: ${{ env.GitVersion_AssemblySemVer }}
-        echo AssemblySemFileVer: ${{ env.GitVersion_AssemblySemFileVer }}
-        echo FullSemVer: ${{ env.GitVersion_FullSemVer }}
-        echo InformationalVersion: ${{ env.GitVersion_InformationalVersion }}
-        echo BranchName: ${{ env.GitVersion_BranchName }}
-        echo EscapedBranchName: ${{ env.GitVersion_EscapedBranchName }}
-        echo Sha: ${{ env.GitVersion_Sha }}
-        echo ShortSha: ${{ env.GitVersion_ShortSha }}
-        echo NuGetVersionV2: ${{ env.GitVersion_NuGetVersionV2 }}
-        echo NuGetVersion: ${{ env.GitVersion_NuGetVersion }}
-        echo NuGetPreReleaseTagV2: ${{ env.GitVersion_NuGetPreReleaseTagV2 }}
-        echo NuGetPreReleaseTag: ${{ env.GitVersion_NuGetPreReleaseTag }}
-        echo VersionSourceSha: ${{ env.GitVersion_VersionSourceSha }}
-        echo CommitsSinceVersionSource: ${{ env.GitVersion_CommitsSinceVersionSource }}
-        echo CommitsSinceVersionSourcePadded: ${{ env.GitVersion_CommitsSinceVersionSourcePadded }}
-        echo UncommittedChanges: ${{ env.GitVersion_UncommittedChanges }}
-        echo CommitDate: ${{ env.GitVersion_CommitDate }}
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.10.2
+        with:
+          versionSpec: 5.x
+      - name: Setup netcore
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.x
+      - name: Setup gitversion
+        uses: gittools/actions/gitversion/setup@v0.10.2
+        with:
+          versionSpec: 5.x
+      - name: Determine Version
+        id: setVersion
+        uses: gittools/actions/gitversion/execute@v0.10.2
+        with:
+          useConfigFile: true
+          configFilePath: ${{ github.workspace }}/GitVersion.yml
+      - name: Debug gitversion values
+        run: |
+          echo Major: ${{ env.GitVersion_Major }}
+          echo Minor: ${{ env.GitVersion_Minor }}
+          echo Patch: ${{ env.GitVersion_Patch }}
+          echo PreReleaseTag: ${{ env.GitVersion_PreReleaseTag }}
+          echo PreReleaseTagWithDash: ${{ env.GitVersion_PreReleaseTagWithDash }}
+          echo PreReleaseLabel: ${{ env.GitVersion_PreReleaseLabel }}
+          echo PreReleaseNumber: ${{ env.GitVersion_PreReleaseNumber }}
+          echo WeightedPreReleaseNumber: ${{ env.GitVersion_WeightedPreReleaseNumber }}
+          echo BuildMetaData: ${{ env.GitVersion_BuildMetaData }}
+          echo BuildMetaDataPadded: ${{ env.GitVersion_BuildMetaDataPadded }}
+          echo FullBuildMetaData: ${{ env.GitVersion_FullBuildMetaData }}
+          echo MajorMinorPatch: ${{ env.GitVersion_MajorMinorPatch }}
+          echo SemVer: ${{ env.GitVersion_SemVer }}
+          echo LegacySemVer: ${{ env.GitVersion_LegacySemVer }}
+          echo LegacySemVerPadded: ${{ env.GitVersion_LegacySemVerPadded }}
+          echo AssemblySemVer: ${{ env.GitVersion_AssemblySemVer }}
+          echo AssemblySemFileVer: ${{ env.GitVersion_AssemblySemFileVer }}
+          echo FullSemVer: ${{ env.GitVersion_FullSemVer }}
+          echo InformationalVersion: ${{ env.GitVersion_InformationalVersion }}
+          echo BranchName: ${{ env.GitVersion_BranchName }}
+          echo EscapedBranchName: ${{ env.GitVersion_EscapedBranchName }}
+          echo Sha: ${{ env.GitVersion_Sha }}
+          echo ShortSha: ${{ env.GitVersion_ShortSha }}
+          echo NuGetVersionV2: ${{ env.GitVersion_NuGetVersionV2 }}
+          echo NuGetVersion: ${{ env.GitVersion_NuGetVersion }}
+          echo NuGetPreReleaseTagV2: ${{ env.GitVersion_NuGetPreReleaseTagV2 }}
+          echo NuGetPreReleaseTag: ${{ env.GitVersion_NuGetPreReleaseTag }}
+          echo VersionSourceSha: ${{ env.GitVersion_VersionSourceSha }}
+          echo CommitsSinceVersionSource: ${{ env.GitVersion_CommitsSinceVersionSource }}
+          echo CommitsSinceVersionSourcePadded: ${{ env.GitVersion_CommitsSinceVersionSourcePadded }}
+          echo UncommittedChanges: ${{ env.GitVersion_UncommittedChanges }}
+          echo CommitDate: ${{ env.GitVersion_CommitDate }}
     outputs:
       tagVersion: ${{ env.GitVersion_FullSemVer }}
 
@@ -93,12 +92,12 @@ jobs:
     needs: [gitversion, build-and-push-image]
     if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - name: add tag to repo
-      run: |
-        git tag ${{ needs.gitversion.outputs.tagVersion }}
-        git push --tags
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: add tag to repo
+        run: |
+          git tag ${{ needs.gitversion.outputs.tagVersion }}
+          git push --tags
 
   deploy:
     permissions:
@@ -137,14 +136,16 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
     steps:
       - uses: actions/checkout@v3
+      - uses: azure/setup-helm@v3
+        with:
+          version: "latest" # default is latest (stable)
+          token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
+        id: install
       - name: Azure CLI script
         uses: azure/CLI@v1
         with:
           azcliversion: latest
           inlineScript: |
-            curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-            chmod 700 get_helm.sh
-            ./get_helm.sh
             az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
             az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
             az aks install-cli
