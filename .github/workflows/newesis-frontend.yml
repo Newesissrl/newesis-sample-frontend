@@ -120,6 +120,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            export PATH="$PATH:${{steps.install.outputs.helm-path}}"
             az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
             az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
             az aks install-cli
@@ -148,6 +149,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            export PATH="$PATH:${{steps.install.outputs.helm-path}}"
             az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
             az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
             az aks install-cli
