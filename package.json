@@ -52,7 +52,7 @@
     ]
   },
   "devDependencies": {
-    "husky": "^9.0.3",
+    "husky": "^9.0.6",
     "prettier": "^3.2.4",
     "tailwindcss": "^3.4.1"
   }
