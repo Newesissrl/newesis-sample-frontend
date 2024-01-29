@@ -21,7 +21,7 @@
     "serve": "^14.2.1",
     "socket.io-client": "^4.7.4",
     "swiper": "^11.0.5",
-    "web-vitals": "^3.5.1"
+    "web-vitals": "^3.5.2"
   },
   "scripts": {
     "prestart": "node ./docker-entrypoint/build-env.js",
