@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@testing-library/jest-dom": "^6.4.1",
+    "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
     "@testing-library/user-event": "^14.5.2",
     "buffer": "^6.0.3",
@@ -20,7 +20,7 @@
     "react-toastify": "^10.0.4",
     "serve": "^14.2.1",
     "socket.io-client": "^4.7.4",
-    "swiper": "^11.0.5",
+    "swiper": "^11.0.6",
     "web-vitals": "^3.5.2"
   },
   "scripts": {
@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "husky": "^9.0.10",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1"
   }
 }
