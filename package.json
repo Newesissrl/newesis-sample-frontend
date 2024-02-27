@@ -20,7 +20,7 @@
     "react-toastify": "^10.0.4",
     "serve": "^14.2.1",
     "socket.io-client": "^4.7.4",
-    "swiper": "^11.0.6",
+    "swiper": "^11.0.7",
     "web-vitals": "^3.5.2"
   },
   "scripts": {
