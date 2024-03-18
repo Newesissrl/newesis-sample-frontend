@@ -22,7 +22,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await API.fetchSingleAsJson("stories", locale, id);
+        const res = await API.fetchSingleAsJson("stories", id, locale);
         if (res.body.length > 1 && res.body[1]?.media) {
           setMedia(res.body[1]?.media);
         } else if (res.thumb) {

@@ -1,31 +1,25 @@
 import React from "react";
 import CardList from "../components/CardList";
-import {
-  topCardListTitle,
-  topCardListTag,
-  bottomCardListTitle,
-  bottomCardListTag,
-} from "../utils/contentFilterHelper";
+import { cardLists } from "../utils/contentFilterHelper";
 
 const Homepage = () => {
+  const lists = cardLists.split("||");
   return (
     <React.Fragment>
-      <CardList
-        title={topCardListTitle}
-        query={{
-          "tags.slug": {
-            in: topCardListTag,
-          },
-        }}
-      />
-      <CardList
-        title={bottomCardListTitle}
-        query={{
-          "tags.slug": {
-            in: bottomCardListTag,
-          },
-        }}
-      />
+      {lists.map((list) => {
+        const [tag, title] = list.split("=");
+        return (
+          <CardList
+            key={tag}
+            title={title}
+            query={{
+              "tags.slug": {
+                in: tag,
+              },
+            }}
+          />
+        );
+      })}
     </React.Fragment>
   );
 };
