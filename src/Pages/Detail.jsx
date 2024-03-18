@@ -10,11 +10,20 @@ import Picture from "../components/Picture";
 import { titleSuffix } from "../utils/contentFilterHelper";
 
 import relativeTime from "dayjs/plugin/relativeTime";
-
+import { useLivePreview } from "@payloadcms/live-preview-react";
+const PAYLOAD_SERVER_URL =
+  process.env.REACT_APP_PAYLOAD_SERVER_URL ||
+  (window._env_ || {}).REACT_APP_PAYLOAD_SERVER_URL ||
+  "https://admin-newesiscorporate.mzinga.io";
 dayjs.extend(relativeTime);
 
 const Detail = () => {
-  const [item, setItem] = useState(null);
+  const { data } = useLivePreview({
+    // initialData: null,
+    serverURL: PAYLOAD_SERVER_URL,
+    depth: 2,
+  });
+  const [item, setItem] = useState(data);
   const [media, setMedia] = useState(false);
   let { id } = useParams();
   const locale = (qs.parse(window.location.search) || {}).locale || "en";
@@ -23,7 +32,10 @@ const Detail = () => {
     const fetchData = async () => {
       try {
         const res = await API.fetchSingleAsJson("stories", locale, id);
-        if (res.body.length > 1 && res.body[1]?.media) {
+        if (!res) {
+          return;
+        }
+        if (res.body?.length > 1 && res.body[1]?.media) {
           setMedia(res.body[1]?.media);
         } else if (res.thumb) {
           setMedia(res.thumb);

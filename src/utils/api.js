@@ -12,6 +12,9 @@ const API = {
     const req = await fetch(
       `${apiBaseUrl}/api/${endpoint}/${id}?locale=${getLocale(locale)}`,
     );
+    if (req.status >= 299) {
+      return null;
+    }
     return await req.json();
   },
   fetchAsJson: async function (endpoint, locale = "en", query, otherQs) {
@@ -27,6 +30,12 @@ const API = {
         locale,
       )}`,
     );
+    if (req.status >= 299) {
+      return {
+        docs: [],
+        nextPage: false,
+      };
+    }
     return await req.json();
   },
   fetchBySlugAsJson: async function (endpoint, locale = "en", slug) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Card from "./Card";
 import qs from "qs";
 import API from "../utils/api";
@@ -15,20 +15,20 @@ export default function CardList({ title, query }) {
   const locale = (qs.parse(window.location.search) || {}).locale || "en";
   const limit = 10;
   // fetch data when page load
-  const fetchData = async (page) => {
+  const fetchData = useCallback(async (page) => {
     try {
       const res = await API.fetchAsJson("stories", locale, query, {
         limit,
         page,
       });
-      const _data = [].concat(data || [], res.docs).flat();
+      const _data = [].concat(data || [], res?.docs).flat();
       setData(_data);
-      setHasNextPage(res.nextPage);
+      setHasNextPage(res?.nextPage);
     } catch (e) {}
-  };
+  }, []);
   useEffect(() => {
     fetchData(1);
-  }, [query, locale]);
+  }, [query, locale, fetchData]);
   const onActiveIndexChange = (swiper) => {
     if (data && hasNextPage && swiper.activeIndex >= data.length - 1) {
       fetchData(parseInt(swiper.activeIndex / limit) + 2);
