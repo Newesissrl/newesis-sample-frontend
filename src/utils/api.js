@@ -1,20 +1,21 @@
 import qs from "qs";
+import { getEnvKey } from "./envUtils";
 
-const apiBaseUrl =
-  process.env.REACT_APP_API_BASE_URL ||
-  (window._env_ || {}).REACT_APP_API_BASE_URL ||
-  "https://api-newesiscorporate.mzinga.io";
+const apiBaseUrl = getEnvKey(
+  "REACT_APP_API_BASE_URL",
+  "https://api-newesiscorporate.mzinga.io",
+);
 const getLocale = (locale = "en") => {
   return window.localStorage.getItem("locale") || locale;
 };
 const API = {
-  fetchSingleAsJson: async function (endpoint, locale = "en", id) {
+  fetchSingleAsJson: async function (endpoint, id, locale = "en") {
     const req = await fetch(
       `${apiBaseUrl}/api/${endpoint}/${id}?locale=${getLocale(locale)}`,
     );
     return await req.json();
   },
-  fetchAsJson: async function (endpoint, locale = "en", query, otherQs) {
+  fetchAsJson: async function (endpoint, query, otherQs, locale = "en") {
     const stringifiedQuery = qs.stringify(
       {
         where: query,

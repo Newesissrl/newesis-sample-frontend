@@ -17,10 +17,15 @@ export default function CardList({ title, query }) {
   // fetch data when page load
   const fetchData = async (page) => {
     try {
-      const res = await API.fetchAsJson("stories", locale, query, {
-        limit,
-        page,
-      });
+      const res = await API.fetchAsJson(
+        "stories",
+        query,
+        {
+          limit,
+          page,
+        },
+        locale,
+      );
       const _data = [].concat(data || [], res.docs).flat();
       setData(_data);
       setHasNextPage(res.nextPage);
@@ -28,17 +33,17 @@ export default function CardList({ title, query }) {
   };
   useEffect(() => {
     fetchData(1);
-  }, [query, locale]);
+  }, []);
   const onActiveIndexChange = (swiper) => {
     if (data && hasNextPage && swiper.activeIndex >= data.length - 1) {
       fetchData(parseInt(swiper.activeIndex / limit) + 2);
     }
   };
   return (
-    data && (
+    data &&
+    data.length > 0 && (
       <React.Fragment>
-        <h1 className="text-5xl font-bold pt-8 pb-8">{title}</h1>
-
+        {title && <h1 className="text-5xl font-bold pt-8 pb-8">{title}</h1>}
         <Swiper
           navigation={true}
           modules={[Navigation]}

@@ -1,54 +1,25 @@
-export const titleSuffix =
-  process.env.REACT_APP_TITLE_SUFFIX ||
-  (window._env_ || {}).REACT_APP_TITLE_SUFFIX ||
-  "Newesis Srl - Be Professional Have Fun !";
+import { getEnvKey } from "./envUtils";
+export const titleSuffix = getEnvKey(
+  "REACT_APP_TITLE_SUFFIX",
+  "Newesis Srl - Be Professional Have Fun !",
+);
 
-export const topCardListTitle =
-  process.env.REACT_APP_TOP_CARD_LIST_TITLE ||
-  (window._env_ || {}).REACT_APP_TOP_CARD_LIST_TITLE ||
-  "Our Services";
+export const cardLists = getEnvKey(
+  "REACT_APP_CARD_LISTS",
+  "services=Our Services||people=Our People||projects=Our Projects",
+);
 
-export const topCardListTag =
-  process.env.REACT_APP_TOP_CARD_LIST_TAG ||
-  (window._env_ || {}).REACT_APP_TOP_CARD_LIST_TAG ||
-  "services";
+export const topPageUri = getEnvKey("REACT_APP_TOP_PAGE_URI", "/about-us");
 
-export const bottomCardListTitle =
-  process.env.REACT_APP_BOTTOM_CARD_LIST_TITLE ||
-  (window._env_ || {}).REACT_APP_BOTTOM_CARD_LIST_TITLE ||
-  "Our People";
+export const topPageTitle = getEnvKey("REACT_APP_TOP_PAGE_TITLE", "About Us");
 
-export const bottomCardListTag =
-  process.env.REACT_APP_BOTTOM_CARD_LIST_TAG ||
-  (window._env_ || {}).REACT_APP_BOTTOM_CARD_LIST_TAG ||
-  "people";
+export const topPageSlug = getEnvKey("REACT_APP_TOP_PAGE_SLUG", "about-us");
 
-export const topPageUri =
-  process.env.REACT_APP_TOP_PAGE_URI ||
-  (window._env_ || {}).REACT_APP_TOP_PAGE_URI ||
-  "/about-us";
+export const formPageUri = getEnvKey("REACT_APP_FORM_PAGE_URI", "/contact-us");
 
-export const topPageTitle =
-  process.env.REACT_APP_TOP_PAGE_TITLE ||
-  (window._env_ || {}).REACT_APP_TOP_PAGE_TITLE ||
-  "About Us";
+export const formPageTitle = getEnvKey(
+  "REACT_APP_FORM_PAGE_TITLE",
+  "Contact Us",
+);
 
-export const topPageSlug =
-  process.env.REACT_APP_TOP_PAGE_SLUG ||
-  (window._env_ || {}).REACT_APP_TOP_PAGE_SLUG ||
-  "about-us";
-
-export const formPageUri =
-  process.env.REACT_APP_FORM_PAGE_URI ||
-  (window._env_ || {}).REACT_APP_FORM_PAGE_URI ||
-  "/contact-us";
-
-export const formPageTitle =
-  process.env.REACT_APP_FORM_PAGE_TITLE ||
-  (window._env_ || {}).REACT_APP_FORM_PAGE_TITLE ||
-  "Contact Us";
-
-export const formPageSlug =
-  process.env.REACT_APP_FORM_PAGE_SLUG ||
-  (window._env_ || {}).REACT_APP_FORM_PAGE_SLUG ||
-  "contact-us";
+export const formPageSlug = getEnvKey("REACT_APP_FORM_PAGE_SLUG", "contact-us");
