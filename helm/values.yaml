@@ -2,7 +2,7 @@ basedns: "mzinga.io"
 tenant:
   name: "newesiscorporate"
   tier: "pro"
-  site: 
+  site:
     title: "Newesis Srl – DevOps and Cloud Engineering Services – Be Professional Have Fun !"
     titleSuffix: "Newesis Srl - Be Professional Have Fun !"
     description: "Newesis Srl Corporate Web Site – DevOps and Cloud Engineering Services – DevOps as a Service – Managed Kubernetes Platform"
@@ -12,6 +12,7 @@ tenant:
     bottomCardList:
       title: "Our People"
       tag: "people"
+    cardLists: "services=Our Services||people=Our People||projects=Our Projects"
     topPage:
       title: "About Us"
       slug: "about-us"
@@ -23,7 +24,7 @@ tenant:
 nodePool:
   # priority: "Spot" # To be set to force deployment in spot instances
   spot:
-    tolerations: 
+    tolerations:
       - key: "kubernetes.azure.com/scalesetpriority"
         operator: "Equal"
         value: "spot"
@@ -33,8 +34,8 @@ sampleFrontend:
   name: newesis-sample-fe
   hostName: www.newesis.com
   replicas: 1
-  image: newesissrl.azurecr.io/newesis/website/frontend  # Placeholder value 
-  imageTag: 0.1.23 # Placeholder value 
+  image: newesissrl.azurecr.io/newesis/website/frontend # Placeholder value
+  imageTag: 0.1.23 # Placeholder value
   tolerations: []
   affinity:
     nodeAffinity:
