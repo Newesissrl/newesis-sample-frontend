@@ -49,6 +49,8 @@ spec:
               value: {{ .Values.tenant.site.bottomCardList.title }}
             - name: REACT_APP_BOTTOM_CARD_LIST_TAG
               value: {{ .Values.tenant.site.bottomCardList.tag }}
+            - name: REACT_APP_CARD_LISTS
+              value: {{ .Values.tenant.site.cardLists }}
             - name: REACT_APP_TOP_PAGE_TITLE
               value: {{ .Values.tenant.site.topPage.title }}
             - name: REACT_APP_TOP_PAGE_SLUG

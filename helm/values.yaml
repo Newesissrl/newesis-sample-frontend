@@ -13,6 +13,7 @@ tenant:
     bottomCardList:
       title: "Our People"
       tag: "people"
+    cardLists: "services=Our Services||people=Our People||projects=Our Projects"
     topPage:
       title: "About Us"
       slug: "about-us"
