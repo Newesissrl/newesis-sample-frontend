@@ -9,6 +9,11 @@ export const cardLists = getEnvKey(
   "services=Our Services||people=Our People||projects=Our Projects",
 );
 
+export const storyLists = getEnvKey(
+  "REACT_APP_STORY_LISTS",
+  "projects=Our Clients",
+);
+
 export const topPageUri = getEnvKey("REACT_APP_TOP_PAGE_URI", "/about-us");
 
 export const topPageTitle = getEnvKey("REACT_APP_TOP_PAGE_TITLE", "About Us");
@@ -23,3 +28,5 @@ export const formPageTitle = getEnvKey(
 );
 
 export const formPageSlug = getEnvKey("REACT_APP_FORM_PAGE_SLUG", "contact-us");
+
+export const storyListUri = getEnvKey("REACT_APP_STORY_LIST_URI", "/projects");
