@@ -51,8 +51,33 @@ export default function StoryPageList({ title, query }) {
           spaceBetween={16}
           slidesPerView={3}
           grid={{
-            rows: 2,
+            rows: 40,
             fill: "row",
+          }}
+          breakpoints={{
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 30,
+              grid: {
+                rows: 10,
+                fill: "row",
+              },
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+              grid: {
+                rows: 20,
+                fill: "row",
+              },
+            },
+            480: {
+              slidesPerView: 1,
+              grid: {
+                rows: 40,
+                fill: "row",
+              },
+            },
           }}
         >
           {data.map((item, idx) => (
