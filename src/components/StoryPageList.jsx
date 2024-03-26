@@ -49,7 +49,7 @@ export default function StoryPageList({ title, query }) {
           modules={[Grid]}
           onActiveIndexChange={onActiveIndexChange}
           spaceBetween={16}
-          slidesPerView={3}
+          slidesPerView={1}
           grid={{
             rows: 40,
             fill: "row",
