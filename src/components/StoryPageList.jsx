@@ -7,6 +7,7 @@ import { Virtual, Grid } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/grid";
 SwiperCore.use([Virtual]);
 export default function StoryPageList({ title, query }) {
   const [data, setData] = useState(null);
@@ -45,19 +46,10 @@ export default function StoryPageList({ title, query }) {
       <React.Fragment>
         {title && <h1 className="text-5xl font-bold pt-8 pb-8">{title}</h1>}
         <Swiper
-          navigation={false}
           modules={[Grid]}
-          slidesPerView={"auto"}
           onActiveIndexChange={onActiveIndexChange}
-          spaceBetween={24}
           grid={{
-            rows: 5,
-          }}
-          breakpoints={{
-            1024: {
-              slidesPerView: 4,
-              spaceBetween: 30,
-            },
+            rows: 2,
           }}
         >
           {data.map((item, idx) => (
