@@ -6,6 +6,7 @@ tenant:
     title: "Newesis Srl – DevOps and Cloud Engineering Services – Be Professional Have Fun !"
     titleSuffix: "Newesis Srl - Be Professional Have Fun !"
     description: "Newesis Srl Corporate Web Site – DevOps and Cloud Engineering Services – DevOps as a Service – Managed Kubernetes Platform"
+    cardList: "services=Our Services||people=Our People||projects=Our Projects"
     topCardList:
       title: "Our Services"
       tag: "services"
