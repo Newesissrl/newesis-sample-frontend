@@ -63,7 +63,7 @@ export default function StoryPageList({ title, query }) {
                 fill: "row",
               },
             },
-            768: {
+            991: {
               slidesPerView: 3,
               spaceBetween: 30,
               grid: {
@@ -71,7 +71,7 @@ export default function StoryPageList({ title, query }) {
                 fill: "row",
               },
             },
-            480: {
+            767: {
               slidesPerView: 1,
               grid: {
                 rows: 40,
