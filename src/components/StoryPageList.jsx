@@ -48,8 +48,11 @@ export default function StoryPageList({ title, query }) {
         <Swiper
           modules={[Grid]}
           onActiveIndexChange={onActiveIndexChange}
+          spaceBetween={16}
+          slidesPerView={3}
           grid={{
             rows: 2,
+            fill: "row",
           }}
         >
           {data.map((item, idx) => (
