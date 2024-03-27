@@ -6,11 +6,8 @@ import ImagePlaceholder from "./ImagePlaceholder";
 
 const Card = ({ item }) => {
   return (
-    <Link
-      to={`/story/${item.id}`}
-      className="bg-black relative transition duration-200 ease-in transform hover:scale-110"
-    >
-      <div className="h-[20rem] sm:h-[25rem] lg:h-[30rem]">
+    <Link to={`/story/${item.id}`} className="bg-transparent">
+      <div className="h-[20rem] sm:h-[25rem] lg:h-[30rem] rounded-md border border-gray">
         {item.thumb ? (
           <Picture
             thumb={item.thumb}
