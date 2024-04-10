@@ -5,7 +5,7 @@
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
     "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^14.2.2",
+    "@testing-library/react": "^14.3.0",
     "@testing-library/user-event": "^14.5.2",
     "buffer": "^6.0.3",
     "dayjs": "^1.11.10",
@@ -20,7 +20,7 @@
     "react-toastify": "^10.0.5",
     "serve": "^14.2.1",
     "socket.io-client": "^4.7.5",
-    "swiper": "^11.1.0",
+    "swiper": "^11.1.1",
     "web-vitals": "^3.5.2"
   },
   "scripts": {
