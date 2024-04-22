@@ -18,7 +18,7 @@
     "react-router-dom": "6.22.3",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
-    "serve": "^14.2.1",
+    "serve": "^14.2.2",
     "socket.io-client": "^4.7.5",
     "swiper": "^11.1.1",
     "web-vitals": "^3.5.2"
