@@ -54,7 +54,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "husky": "^9.0.11",
-    "prettier": "^3.2.5",
-    "tailwindcss": "^3.4.3"
+    "prettier": "^3.3.1",
+    "tailwindcss": "^3.4.4"
   }
 }
