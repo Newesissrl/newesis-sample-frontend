@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^15.0.7",
     "@testing-library/user-event": "^14.5.2",
     "buffer": "^6.0.3",
@@ -21,7 +21,7 @@
     "serve": "^14.2.3",
     "socket.io-client": "^4.7.5",
     "swiper": "^11.1.4",
-    "web-vitals": "^4.0.1"
+    "web-vitals": "^4.1.1"
   },
   "scripts": {
     "prestart": "node ./docker-entrypoint/build-env.js",
@@ -54,7 +54,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "husky": "^9.0.11",
-    "prettier": "^3.3.1",
+    "prettier": "^3.3.2",
     "tailwindcss": "^3.4.4"
   }
 }
