@@ -20,7 +20,7 @@
     "react-toastify": "^10.0.5",
     "serve": "^14.2.3",
     "socket.io-client": "^4.7.5",
-    "swiper": "^11.1.7",
+    "swiper": "^11.1.9",
     "web-vitals": "^4.2.2"
   },
   "scripts": {
@@ -53,8 +53,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "husky": "^9.1.1",
+    "husky": "^9.1.4",
     "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.6"
+    "tailwindcss": "^3.4.7"
   }
 }
