@@ -1939,10 +1939,10 @@
     lodash "^4.17.21"
     redent "^3.0.0"
 
-"@testing-library/react@^16.0.0":
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-16.0.0.tgz#0a1e0c7a3de25841c3591b8cb7fb0cf0c0a27321"
-  integrity sha512-guuxUKRWQ+FgNX0h0NS0FIq3Q3uLtWVpBzcLOggmfMoUpgBnzBzvLLd4fbm6yS8ydJd94cIfY4yP9qUQjM2KwQ==
+"@testing-library/react@^16.0.1":
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-16.0.1.tgz#29c0ee878d672703f5e7579f239005e4e0faa875"
+  integrity sha512-dSmwJVtJXmku+iocRhWOUFbrERC76TX2Mnf0ATODz8brzAZrMBbzLwQixlBSanZxR6LddK3eiwpSFZgDET1URg==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
@@ -8811,10 +8811,10 @@ svgo@^2.7.0:
     picocolors "^1.0.0"
     stable "^0.1.8"
 
-swiper@^11.1.10:
-  version "11.1.10"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-11.1.10.tgz#4d3df50ff8afc4960e9644ed6e5828d35ab38853"
-  integrity sha512-pAVM6vCb6bumj2B9aSh67l3wP1j5YR8dPQM1YhQKMpnBc33vs+RpyVz6NZYZl/ZopCBSYbbWK5nvESwbmU0QXQ==
+swiper@^11.1.11:
+  version "11.1.11"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-11.1.11.tgz#17fa3589b372d1d1137bb1a02a4c12a5256ba2fc"
+  integrity sha512-077Aw3OrlZpkkBRf/6+44bGh/HZY/vsLEyate2db2KkJgYUIR5TvDgvvhcJtW/puXzw79w5KBc30DauEX6GZYQ==
 
 symbol-tree@^3.2.4:
   version "3.2.4"
