@@ -115,6 +115,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            tdnf install -y wget
             wget https://get.helm.sh/helm-v3.14.0-linux-amd64.tar.gz
             tar -zxvf helm-v3.14.0-linux-amd64.tar.gz
             mv linux-amd64/helm /usr/bin/helm
@@ -142,6 +143,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            tdnf install -y wget
             wget https://get.helm.sh/helm-v3.14.0-linux-amd64.tar.gz
             tar -zxvf helm-v3.14.0-linux-amd64.tar.gz
             mv linux-amd64/helm /usr/bin/helm
