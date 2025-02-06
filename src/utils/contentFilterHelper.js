@@ -4,6 +4,11 @@ export const titleSuffix = getEnvKey(
   "Newesis Srl - Be Professional Have Fun !",
 );
 
+export const homeVideoTag = getEnvKey(
+  "REACT_APP_HOMEVIDEO_TAG",
+  "homepagevideo",
+);
+
 export const cardLists = getEnvKey(
   "REACT_APP_CARD_LISTS",
   "services=Our Services||people=Our People||projects=Our Projects",
