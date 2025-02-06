@@ -6,13 +6,24 @@ export default function Footer() {
         <h3 className="text-xl px-4 lg:px-0 col-span-12 font-bold pt-4 pb-4">
           Newesis Srl
         </h3>
-        <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-4">
+        <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-3">
           Via Principi d'Acaja, 44
           <br />
           10138 Torino Italy <br />
           +39 011 1962 0569
         </div>
-        <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-4 lg:text-center">
+        <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-3">
+          <a href="https://www.linkedin.com/company/newesissrl/">
+            LinkedIn Page
+          </a>
+          <br />
+          <a href="https://www.youtube.com/@newesissrl8014">
+            YouTube Channel
+          </a>{" "}
+          <br />
+          <a href="https://x.com/newesissrl">X Account</a>
+        </div>
+        <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-3 lg:text-center">
           PIVA 12028300015
           <br />
           capitale sociale 10.000 euro I.V.
@@ -25,7 +36,7 @@ export default function Footer() {
             newesis@messaggipec.it
           </a>
         </div>
-        <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-4 lg:text-right">
+        <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-3 lg:text-right">
           &copy; {new Date().getFullYear()} Newesis Srl
           <br />
           <a className="underline underline-offset-2" href="/privacy-policy">
