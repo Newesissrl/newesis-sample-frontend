@@ -13,15 +13,29 @@ export default function Footer() {
           +39 011 1962 0569
         </div>
         <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-3">
-          <a href="https://www.linkedin.com/company/newesissrl/">
+          <a
+            href="https://www.linkedin.com/company/newesissrl/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             LinkedIn Page
           </a>
           <br />
-          <a href="https://www.youtube.com/@newesissrl8014">
+          <a
+            href="https://www.youtube.com/@newesissrl8014"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             YouTube Channel
           </a>{" "}
           <br />
-          <a href="https://x.com/newesissrl">X Account</a>
+          <a
+            href="https://x.com/newesissrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            X Account
+          </a>
         </div>
         <div className="col-span-12 my-4 lg:my-0 px-4 lg:px-0 lg:col-span-3 lg:text-center">
           PIVA 12028300015

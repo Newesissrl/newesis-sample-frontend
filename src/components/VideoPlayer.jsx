@@ -42,6 +42,7 @@ export default function VideoPlayer({ query }) {
               className="w-full h-full"
               controls
               autoPlay
+              muted
               loop
               playsInline
               poster={homePageVideo.thumb?.url}
