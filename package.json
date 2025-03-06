@@ -10,14 +10,14 @@
     "buffer": "^6.0.3",
     "dayjs": "^1.11.13",
     "qs": "^6.13.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-helmet": "^6.1.0",
     "react-html-parser": "^2.0.2",
     "react-icons": "^5.4.0",
-    "react-router-dom": "6.27.0",
+    "react-router-dom": "7.2.0",
     "react-scripts": "5.0.1",
-    "react-toastify": "^10.0.6",
+    "react-toastify": "^11.0.5",
     "serve": "^14.2.4",
     "socket.io-client": "^4.8.1",
     "swiper": "^11.1.15",
@@ -55,6 +55,6 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "husky": "^9.1.7",
     "prettier": "^3.4.2",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^4.0.11"
   }
 }
