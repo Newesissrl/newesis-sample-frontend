@@ -1,9 +1,11 @@
 import qs from "qs";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import API from "../utils/api";
+
 import {
   formPageSlug,
   formPageTitle,
@@ -23,9 +25,10 @@ const ToastMsg = ({ item }) => {
     </React.Fragment>
   );
 };
-export default function ContactUs() {
+export default function FormPage() {
   const [item, setItem] = useState(null);
   const [formData, setFormData] = useState({});
+  let { slug } = useParams();
   const [disabled, setDisabled] = useState(false);
   const locale = (qs.parse(window.location.search) || {}).locale || "en";
   const handleInputChange = (event) => {
@@ -70,7 +73,11 @@ export default function ContactUs() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await API.fetchBySlugAsJson("forms", locale, formPageSlug);
+        const res = await API.fetchBySlugAsJson(
+          "forms",
+          locale,
+          slug || formPageSlug,
+        );
 
         setItem(res);
       } catch (e) {
@@ -78,16 +85,18 @@ export default function ContactUs() {
       }
     };
     fetchData();
-  }, [locale]);
+  }, [slug, locale]);
   return (
-    <React.Fragment>
-      <Helmet>
-        <title>
-          {formPageTitle} | {titleSuffix}
-        </title>
-      </Helmet>
-      <h1 className="text-5xl font-bold pt-8 pb-8">{formPageTitle}</h1>
-      {item && (
+    item && (
+      <React.Fragment>
+        <Helmet>
+          <title>
+            {item.title || formPageTitle} | {titleSuffix}
+          </title>
+        </Helmet>
+        <h1 className="text-5xl font-bold pt-8 pb-8">
+          {item.title || formPageTitle}
+        </h1>
         <form className="form" onSubmit={handleSubmit}>
           {item.fields.map((field) => {
             return (
@@ -161,19 +170,19 @@ export default function ContactUs() {
             {item.submitButtonLabel}
           </button>
         </form>
-      )}
-      <ToastContainer
-        position="bottom-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover={false}
-        theme="light"
-      />
-    </React.Fragment>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover={false}
+          theme="light"
+        />
+      </React.Fragment>
+    )
   );
 }

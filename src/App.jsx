@@ -1,19 +1,19 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Detail from "./Pages/Detail";
-import Homepage from "./Pages/Homepage";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
-import TopPage from "./Pages/TopPage";
-import FormPage from "./Pages/FormPage";
-import StoryList from "./Pages/StoryListPage";
-import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import Header from "./components/Header";
 import AlertModal from "./Pages/Alert";
-import { socket, SocketContext } from "./utils/socket";
+import Detail from "./Pages/Detail";
+import FormPage from "./Pages/FormPage";
+import Homepage from "./Pages/Homepage";
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
+import StoryList from "./Pages/StoryListPage";
+import TopPage from "./Pages/TopPage";
 import {
-  topPageUri,
   formPageUri,
   storyListUri,
+  topPageUri,
 } from "./utils/contentFilterHelper";
+import { socket, SocketContext } from "./utils/socket";
 
 const App = () => {
   return (
@@ -26,6 +26,7 @@ const App = () => {
             <Route path="/" element={<Homepage />} />
             <Route path={topPageUri} element={<TopPage />} />
             <Route path={formPageUri} element={<FormPage />} />
+            <Route path="/forms/:slug" element={<FormPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/story/:id" element={<Detail />} />
             <Route path={storyListUri} element={<StoryList />} />

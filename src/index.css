@@ -57,7 +57,8 @@ html {
 }
 
 form input,
-form textarea {
+form textarea,
+form select {
   @apply text-black;
 }
 
