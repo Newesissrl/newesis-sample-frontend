@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
 import qs from "qs";
-import API from "../utils/api";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import API from "../utils/api";
 import {
-  titleSuffix,
-  formPageTitle,
   formPageSlug,
+  formPageTitle,
+  titleSuffix,
 } from "../utils/contentFilterHelper";
 
 const ToastMsg = ({ item }) => {
@@ -92,22 +92,58 @@ export default function ContactUs() {
           {item.fields.map((field) => {
             return (
               <React.Fragment key={field.id}>
-                <label className="block py-2" htmlFor={field.name}>
-                  <span className="block">{field.label || field.name}</span>
+                <label
+                  className={
+                    field.blockType === "checkbox" ? "flex py-2" : "block py-2"
+                  }
+                  htmlFor={field.name}
+                >
+                  <span
+                    className={
+                      field.blockType === "checkbox"
+                        ? "flex basis-full"
+                        : "block"
+                    }
+                  >
+                    {field.label || field.name}
+                  </span>
+
                   {field.blockType === "textarea" ? (
                     <textarea
+                      id={field.name}
                       name={field.name}
                       className="mt-1 block w-full px-3 py-2"
                       {...(field.required ? { required: "required" } : {})}
                       rows={5}
                       onChange={handleInputChange}
                     ></textarea>
-                  ) : (
-                    <input
-                      type={field.blockType}
+                  ) : field.blockType === "select" ? (
+                    <select
+                      id={field.name}
                       name={field.name}
                       {...(field.required ? { required: "required" } : {})}
                       className="mt-1 block w-full px-3 py-2"
+                      onChange={handleInputChange}
+                    >
+                      {field.options.map((o) => {
+                        return (
+                          <option key={o.id} value={o.value}>
+                            {o.label || o.value}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  ) : (
+                    <input
+                      type={field.blockType}
+                      id={field.name}
+                      name={field.name}
+                      {...(field.required ? { required: "required" } : {})}
+                      className={
+                        field.blockType === "checkbox"
+                          ? "flex px-3 py-2"
+                          : "mt-1 block w-full px-3 py-2"
+                      }
                       onChange={handleInputChange}
                     />
                   )}
