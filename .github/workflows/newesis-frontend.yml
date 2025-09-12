@@ -154,3 +154,31 @@ jobs:
             az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }} --admin
             helm dependency build ${{ vars.CHART_PATH }}
             helm upgrade -i -n ${{ vars.MZINGA_DEPLOY_NAMESPACE }} --create-namespace mzinga-frontend ${{ vars.CHART_PATH }} --set sampleFrontend.imageTag=${{ needs.gitversion.outputs.tagVersion }},sampleFrontend.image=${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }},sampleFrontend.hostName="www.mzinga.io",tenant.name=mzinga,tenant.site.title="Mzinga.io - Your Data API - by Newesis srl",tenant.site.description="Mzinga.io - HeadlessCMS - Backend as a Service",tenant.site.titleSuffix="Mzinga.io by Newesis Srl",tenant.site.cardLists="product=Mzinga.io Product||services=Mzinga.io Services",tenant.site.topCardList.title="Mzinga.io Product",tenant.site.bottomCardList.title="Mzinga.io Services",tenant.site.topCardList.tag="product",tenant.site.bottomCardList.tag="services",tenant.site.topPage.title="Early Adopters",tenant.site.formPage.title="Request Info",tenant.site.topPage.slug="early-adopters",tenant.site.topPage.uri="/early-adopters"
+
+  deployCoreDataLinkFE:
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    environment: newesis-frontend
+    needs: [gitversion, build-and-push-image]
+    if: "!contains(github.event.head_commit.message, '[skip deploy]') && github.ref == 'refs/heads/main'"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            tdnf install -y wget tar
+            wget https://get.helm.sh/helm-v3.14.0-linux-amd64.tar.gz
+            tar -zxvf helm-v3.14.0-linux-amd64.tar.gz
+            mv linux-amd64/helm /usr/bin/helm
+            helm version
+            az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+            az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }} 
+            az aks install-cli
+            az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }} --admin
+            helm dependency build ${{ vars.CHART_PATH }}
+            helm upgrade -i -n ${{ vars.COREDATALINK_DEPLOY_NAMESPACE }} --create-namespace mzinga-frontend ${{ vars.CHART_PATH }} --set sampleFrontend.imageTag=${{ needs.gitversion.outputs.tagVersion }},sampleFrontend.image=${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }},sampleFrontend.hostName="www.coredatalink.io",tenant.name=coredatalink,tenant.site.title="CoreDataLink.io - Enterprise Data Platform - by Newesis srl",tenant.site.description="CoreDataLink.io - Data Platform - Backend as a Service - Powered by Mzinga.io",tenant.site.titleSuffix="CoreDataLink by Newesis Srl",tenant.site.cardLists="coredatalink=CoreDataLink - Powered by Mzinga.io",tenant.site.topCardList.title="CoreDataLink - Powered by Mzinga.io",tenant.site.bottomCardList.title="CoreDataLink",tenant.site.topCardList.tag="coredatalink",tenant.site.bottomCardList.tag="coredatalinkservices",tenant.site.topPage.title="About",tenant.site.formPage.title="Contact us",tenant.site.topPage.slug="coredatalink-presentation",tenant.site.topPage.uri="/about,tenant.site.formPage.slug="coredatalink-contact-us""
