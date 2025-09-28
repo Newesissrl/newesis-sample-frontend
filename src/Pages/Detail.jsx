@@ -33,8 +33,19 @@ const Detail = () => {
   const [media, setMedia] = useState(false);
   const [formData, setFormData] = useState({});
   const [disabled, setDisabled] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [usStates, setUsStates] = useState([]);
   let { id } = useParams();
   const locale = (qs.parse(window.location.search) || {}).locale || "en";
+
+  const getLocalizedText = (key) => {
+    const texts = {
+      selectCountry:
+        locale === "it" ? "Seleziona Paese..." : "Select Country...",
+      selectState: locale === "it" ? "Seleziona Stato..." : "Select State...",
+    };
+    return texts[key];
+  };
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -44,6 +55,13 @@ const Detail = () => {
       ...formData,
       [name]: value,
     });
+
+    // Fetch US states when US is selected
+    if (name === "country" && value === "US") {
+      fetchUsStates();
+    } else if (name === "country") {
+      setUsStates([]);
+    }
   };
 
   const handleSubmit = async (evt, form) => {
@@ -103,6 +121,99 @@ const Detail = () => {
     };
     fetchData();
   }, [id, locale]);
+
+  const fetchUsStates = async () => {
+    try {
+      const response = await fetch(
+        "https://api.census.gov/data/2019/pep/charagegroups?get=NAME&for=state:*",
+      );
+      const data = await response.json();
+      const states = data
+        .slice(1)
+        .map(([name, code]) => ({
+          code,
+          name: name.replace(" ", ""),
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      setUsStates(states);
+    } catch (e) {
+      console.log("Failed to fetch US states, using fallback");
+      setUsStates([
+        { code: "AL", name: "Alabama" },
+        { code: "AK", name: "Alaska" },
+        { code: "AZ", name: "Arizona" },
+        { code: "AR", name: "Arkansas" },
+        { code: "CA", name: "California" },
+        { code: "CO", name: "Colorado" },
+        { code: "CT", name: "Connecticut" },
+        { code: "DE", name: "Delaware" },
+        { code: "FL", name: "Florida" },
+        { code: "GA", name: "Georgia" },
+        { code: "HI", name: "Hawaii" },
+        { code: "ID", name: "Idaho" },
+        { code: "IL", name: "Illinois" },
+        { code: "IN", name: "Indiana" },
+        { code: "IA", name: "Iowa" },
+        { code: "KS", name: "Kansas" },
+        { code: "KY", name: "Kentucky" },
+        { code: "LA", name: "Louisiana" },
+        { code: "ME", name: "Maine" },
+        { code: "MD", name: "Maryland" },
+        { code: "MA", name: "Massachusetts" },
+        { code: "MI", name: "Michigan" },
+        { code: "MN", name: "Minnesota" },
+        { code: "MS", name: "Mississippi" },
+        { code: "MO", name: "Missouri" },
+        { code: "MT", name: "Montana" },
+        { code: "NE", name: "Nebraska" },
+        { code: "NV", name: "Nevada" },
+        { code: "NH", name: "New Hampshire" },
+        { code: "NJ", name: "New Jersey" },
+        { code: "NM", name: "New Mexico" },
+        { code: "NY", name: "New York" },
+        { code: "NC", name: "North Carolina" },
+        { code: "ND", name: "North Dakota" },
+        { code: "OH", name: "Ohio" },
+        { code: "OK", name: "Oklahoma" },
+        { code: "OR", name: "Oregon" },
+        { code: "PA", name: "Pennsylvania" },
+        { code: "RI", name: "Rhode Island" },
+        { code: "SC", name: "South Carolina" },
+        { code: "SD", name: "South Dakota" },
+        { code: "TN", name: "Tennessee" },
+        { code: "TX", name: "Texas" },
+        { code: "UT", name: "Utah" },
+        { code: "VT", name: "Vermont" },
+        { code: "VA", name: "Virginia" },
+        { code: "WA", name: "Washington" },
+        { code: "WV", name: "West Virginia" },
+        { code: "WI", name: "Wisconsin" },
+        { code: "WY", name: "Wyoming" },
+      ]);
+    }
+  };
+
+  // fetch countries
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await fetch(
+          "https://restcountries.com/v3.1/all?fields=name,cca2",
+        );
+        const data = await response.json();
+        const sortedCountries = data
+          .map((country) => ({
+            code: country.cca2,
+            name: country.name.common,
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name));
+        setCountries(sortedCountries);
+      } catch (e) {
+        console.log("Failed to fetch countries:", e);
+      }
+    };
+    fetchCountries();
+  }, []);
 
   return (
     item && (
@@ -231,65 +342,142 @@ const Detail = () => {
                         className="form"
                         onSubmit={(evt) => handleSubmit(evt, b.form)}
                       >
-                        {b.form.fields.map((field) => (
-                          <div key={field.id} className="py-2">
-                            <label
-                              className={
-                                field.blockType === "checkbox"
-                                  ? "flex py-2"
-                                  : "block py-2"
-                              }
-                              htmlFor={field.name}
-                            >
-                              <span
+                        {b.form.fields.map((field) => {
+                          if (field.blockType === "message") {
+                            return (
+                              <div
+                                key={field.id}
+                                className="py-2 p-4 bg-blue-50 border-l-4 border-blue-400"
+                              >
+                                <div className="text-blue-800">
+                                  {field.message?.map((m, i) => (
+                                    <p key={i}>
+                                      {m.children?.map((c) => c.text).join("")}
+                                    </p>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          }
+                          return (
+                            <div key={field.id} className="py-2">
+                              <label
                                 className={
                                   field.blockType === "checkbox"
-                                    ? "flex basis-full"
-                                    : "block"
+                                    ? "flex py-2"
+                                    : "block py-2"
                                 }
+                                htmlFor={field.name}
                               >
-                                {field.label || field.name}
-                              </span>
-                              {field.blockType === "textarea" ? (
-                                <textarea
-                                  id={field.name}
-                                  name={field.name}
-                                  className="mt-1 block w-full px-3 py-2 border rounded"
-                                  required={field.required}
-                                  rows={5}
-                                  onChange={handleInputChange}
-                                />
-                              ) : field.blockType === "select" ? (
-                                <select
-                                  id={field.name}
-                                  name={field.name}
-                                  required={field.required}
-                                  className="mt-1 block w-full px-3 py-2 border rounded"
-                                  onChange={handleInputChange}
-                                >
-                                  {field.options?.map((o) => (
-                                    <option key={o.id} value={o.value}>
-                                      {o.label || o.value}
-                                    </option>
-                                  ))}
-                                </select>
-                              ) : (
-                                <input
-                                  type={field.blockType}
-                                  id={field.name}
-                                  name={field.name}
-                                  required={field.required}
+                                <span
                                   className={
                                     field.blockType === "checkbox"
-                                      ? "flex px-3 py-2"
-                                      : "mt-1 block w-full px-3 py-2 border rounded"
+                                      ? "flex basis-full"
+                                      : "block"
                                   }
-                                  onChange={handleInputChange}
-                                />
-                              )}
-                            </label>
-                          </div>
-                        ))}
+                                >
+                                  {field.label || field.name}
+                                </span>
+                                {field.blockType === "textarea" ? (
+                                  <textarea
+                                    id={field.name}
+                                    name={field.name}
+                                    className="mt-1 block w-full px-3 py-2 border rounded"
+                                    required={field.required}
+                                    rows={5}
+                                    onChange={handleInputChange}
+                                  />
+                                ) : field.blockType === "select" ? (
+                                  <select
+                                    id={field.name}
+                                    name={field.name}
+                                    required={field.required}
+                                    className="mt-1 block w-full px-3 py-2 border rounded"
+                                    onChange={handleInputChange}
+                                  >
+                                    <option value="">Select...</option>
+                                    {field.options?.map((o) => (
+                                      <option key={o.id} value={o.value}>
+                                        {o.label || o.value}
+                                      </option>
+                                    ))}
+                                  </select>
+                                ) : field.blockType === "country" ? (
+                                  <select
+                                    id={field.name}
+                                    name={field.name}
+                                    required={field.required}
+                                    className="mt-1 block w-full px-3 py-2 border rounded"
+                                    onChange={handleInputChange}
+                                  >
+                                    <option value="">
+                                      {getLocalizedText("selectCountry")}
+                                    </option>
+                                    {countries.map((country) => (
+                                      <option
+                                        key={country.code}
+                                        value={country.code}
+                                      >
+                                        {country.name}
+                                      </option>
+                                    ))}
+                                  </select>
+                                ) : field.blockType === "state" ? (
+                                  formData.country === "US" ? (
+                                    <select
+                                      id={field.name}
+                                      name={field.name}
+                                      required={field.required}
+                                      className="mt-1 block w-full px-3 py-2 border rounded"
+                                      onChange={handleInputChange}
+                                    >
+                                      <option value="">
+                                        {getLocalizedText("selectState")}
+                                      </option>
+                                      {usStates.map((state) => (
+                                        <option
+                                          key={state.code}
+                                          value={state.code}
+                                        >
+                                          {state.name}
+                                        </option>
+                                      ))}
+                                    </select>
+                                  ) : (
+                                    <input
+                                      type="text"
+                                      id={field.name}
+                                      name={field.name}
+                                      required={field.required}
+                                      className="mt-1 block w-full px-3 py-2 border rounded"
+                                      placeholder={getLocalizedText(
+                                        "selectState",
+                                      )}
+                                      onChange={handleInputChange}
+                                    />
+                                  )
+                                ) : (
+                                  <input
+                                    type={
+                                      field.blockType === "number"
+                                        ? "number"
+                                        : field.blockType
+                                    }
+                                    id={field.name}
+                                    name={field.name}
+                                    required={field.required}
+                                    className={
+                                      field.blockType === "checkbox"
+                                        ? "flex px-3 py-2"
+                                        : "mt-1 block w-full px-3 py-2 border rounded"
+                                    }
+                                    onChange={handleInputChange}
+                                  />
+                                )}
+                              </label>
+                            </div>
+                          );
+                        })}
                         <button
                           type="submit"
                           className={`rounded bg-${disabled ? "gray" : "blue"}-600 text-white px-10 mt-4 py-4 w-full hover:bg-${disabled ? "gray" : "blue"}-700`}
@@ -319,13 +507,20 @@ const Detail = () => {
                       )}
                       {b.mediaGallery && (
                         <div>
-                          <h3 className="text-2xl font-bold mb-4">{b.mediaGallery.title}</h3>
+                          <h3 className="text-2xl font-bold mb-4">
+                            {b.mediaGallery.title}
+                          </h3>
                           {b.mediaGallery.summary && (
-                            <p className="text-gray-600 mb-4">{b.mediaGallery.summary}</p>
+                            <p className="text-gray-600 mb-4">
+                              {b.mediaGallery.summary}
+                            </p>
                           )}
                           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                             {b.mediaGallery.relatedMedia?.map((media) => (
-                              <div key={media.value.id} className="aspect-square">
+                              <div
+                                key={media.value.id}
+                                className="aspect-square"
+                              >
                                 <Picture thumb={media.value} />
                               </div>
                             ))}
