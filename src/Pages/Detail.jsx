@@ -17,12 +17,15 @@ dayjs.extend(relativeTime);
 
 const linkifyText = (html) => {
   // Skip if HTML already contains anchor tags
-  if (html.includes('<a ')) {
+  if (html.includes("<a ")) {
     return html;
   }
   // Only linkify URLs in plain text
   const urlRegex = /(https?:\/\/[^\s<>"]+)/g;
-  return html.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">$1</a>');
+  return html.replace(
+    urlRegex,
+    '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">$1</a>',
+  );
 };
 
 const Detail = () => {
@@ -60,11 +63,13 @@ const Detail = () => {
     });
     if (form?.confirmationType === "message") {
       toast.success(
-        <div dangerouslySetInnerHTML={{
-          __html: form?.confirmationMessage
-            .map((m) => m.serialized.html)
-            .join(""),
-        }} />,
+        <div
+          dangerouslySetInnerHTML={{
+            __html: form?.confirmationMessage
+              .map((m) => m.serialized.html)
+              .join(""),
+          }}
+        />,
         {
           position: "bottom-center",
           autoClose: 5000,
@@ -74,7 +79,7 @@ const Detail = () => {
           draggable: false,
           progress: undefined,
           theme: "light",
-        }
+        },
       );
     } else if (form?.confirmationType === "redirect") {
       window.location.href = form?.redirect.url;
@@ -143,8 +148,13 @@ const Detail = () => {
               {item.body.map((b) => {
                 if (b.blockType === "oembed" && b.oEmbedURL) {
                   // Handle YouTube URLs
-                  if (b.oEmbedURL.includes("youtube.com/watch") || b.oEmbedURL.includes("youtu.be/")) {
-                    const videoId = b.oEmbedURL.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+                  if (
+                    b.oEmbedURL.includes("youtube.com/watch") ||
+                    b.oEmbedURL.includes("youtu.be/")
+                  ) {
+                    const videoId = b.oEmbedURL.match(
+                      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
+                    );
                     if (videoId) {
                       return (
                         <div key={b.id} className="mb-6">
@@ -163,23 +173,41 @@ const Detail = () => {
                     }
                   }
                   // Handle X.com (Twitter) URLs
-                  if (b.oEmbedURL.includes("x.com/") || b.oEmbedURL.includes("twitter.com/")) {
+                  if (
+                    b.oEmbedURL.includes("x.com/") ||
+                    b.oEmbedURL.includes("twitter.com/")
+                  ) {
                     return (
                       <div key={b.id} className="mb-6">
                         <blockquote className="twitter-tweet">
-                          <a href={b.oEmbedURL} target="_blank" rel="noopener noreferrer">
+                          <a
+                            href={b.oEmbedURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             View on X
                           </a>
                         </blockquote>
-                        <script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></script>
+                        <script
+                          async
+                          src="https://platform.twitter.com/widgets.js"
+                          charSet="utf-8"
+                        ></script>
                       </div>
                     );
                   }
                   // Fallback for other oembed URLs
                   return (
                     <div key={b.id} className="mb-6 p-4 bg-gray-100 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-2">Embedded content:</p>
-                      <a href={b.oEmbedURL} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                      <p className="text-sm text-gray-600 mb-2">
+                        Embedded content:
+                      </p>
+                      <a
+                        href={b.oEmbedURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
                         {b.oEmbedURL}
                       </a>
                     </div>
@@ -190,17 +218,36 @@ const Detail = () => {
                     <div key={b.id} className="mb-6">
                       {b.richText && (
                         <div className="mb-4">
-                          {ReactHtmlParser(b.richText.map(r => r.children.map(c => c.text).join('')).join(''))}
+                          {ReactHtmlParser(
+                            b.richText
+                              .map((r) =>
+                                r.children.map((c) => c.text).join(""),
+                              )
+                              .join(""),
+                          )}
                         </div>
                       )}
-                      <form className="form" onSubmit={(evt) => handleSubmit(evt, b.form)}>
+                      <form
+                        className="form"
+                        onSubmit={(evt) => handleSubmit(evt, b.form)}
+                      >
                         {b.form.fields.map((field) => (
                           <div key={field.id} className="py-2">
                             <label
-                              className={field.blockType === "checkbox" ? "flex py-2" : "block py-2"}
+                              className={
+                                field.blockType === "checkbox"
+                                  ? "flex py-2"
+                                  : "block py-2"
+                              }
                               htmlFor={field.name}
                             >
-                              <span className={field.blockType === "checkbox" ? "flex basis-full" : "block"}>
+                              <span
+                                className={
+                                  field.blockType === "checkbox"
+                                    ? "flex basis-full"
+                                    : "block"
+                                }
+                              >
                                 {field.label || field.name}
                               </span>
                               {field.blockType === "textarea" ? (
@@ -251,6 +298,40 @@ const Detail = () => {
                           {b.form.submitButtonLabel}
                         </button>
                       </form>
+                    </div>
+                  );
+                }
+                if (b.blockType === "media") {
+                  return (
+                    <div key={b.id} className="mb-6">
+                      {b.media && (
+                        <div className="mb-4">
+                          <Picture thumb={b.media} />
+                        </div>
+                      )}
+                      {b.video && (
+                        <div className="mb-4">
+                          <video controls className="w-full rounded-lg">
+                            <source src={b.video.url} type={b.video.mimeType} />
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                      )}
+                      {b.mediaGallery && (
+                        <div>
+                          <h3 className="text-2xl font-bold mb-4">{b.mediaGallery.title}</h3>
+                          {b.mediaGallery.summary && (
+                            <p className="text-gray-600 mb-4">{b.mediaGallery.summary}</p>
+                          )}
+                          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {b.mediaGallery.relatedMedia?.map((media) => (
+                              <div key={media.value.id} className="aspect-square">
+                                <Picture thumb={media.value} />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 }
