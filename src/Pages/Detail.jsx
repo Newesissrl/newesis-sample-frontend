@@ -272,11 +272,12 @@ const Detail = () => {
                           <iframe
                             width="100%"
                             height="315"
-                            src={`https://www.youtube.com/embed/${videoId[1]}`}
+                            src={`https://www.youtube.com/embed/${videoId[1]}?enablejsapi=1&origin=${window.location.origin}`}
                             title="YouTube video"
                             frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowFullScreen
+                            referrerPolicy="strict-origin-when-cross-origin"
                             className="rounded-lg"
                           ></iframe>
                         </div>
