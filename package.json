@@ -4,21 +4,21 @@
   "private": true,
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.1.0",
-    "@testing-library/user-event": "^14.5.2",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "buffer": "^6.0.3",
-    "dayjs": "^1.11.13",
-    "qs": "^6.13.1",
+    "dayjs": "^1.11.18",
+    "qs": "^6.14.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
     "react-html-parser": "^2.0.2",
-    "react-icons": "^5.4.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "6.27.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^10.0.6",
-    "serve": "^14.2.4",
+    "serve": "^14.2.5",
     "socket.io-client": "^4.8.1",
     "swiper": "^11.1.15",
     "web-vitals": "^4.2.4"
@@ -54,7 +54,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "husky": "^9.1.7",
-    "prettier": "^3.4.2",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.4.17"
   }
 }
