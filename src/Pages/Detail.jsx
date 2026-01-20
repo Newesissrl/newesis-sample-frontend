@@ -35,7 +35,7 @@ const Detail = () => {
   const [disabled, setDisabled] = useState(false);
   const [countries, setCountries] = useState([]);
   const [usStates, setUsStates] = useState([]);
-  let { id } = useParams();
+  let { slug } = useParams();
   const locale = (qs.parse(window.location.search) || {}).locale || "en";
 
   const getLocalizedText = (key) => {
@@ -108,19 +108,35 @@ const Detail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await API.fetchSingleAsJson("stories", id, locale);
-        if (res.body.length > 1 && res.body[1]?.media) {
-          setMedia(res.body[1]?.media);
-        } else if (res.thumb) {
-          setMedia(res.thumb);
+        try {
+          // First try to fetch by slug
+          let res = await API.fetchBySlugAsJson("stories", locale, slug);
+          if (res.body.length > 1 && res.body[1]?.media) {
+            setMedia(res.body[1]?.media);
+          } else if (res.thumb) {
+            setMedia(res.thumb);
+          }
+          setItem(res);
+        } catch (e) {
+          // If slug fails, try to fetch by ID
+          try {
+            let res = await API.fetchSingleAsJson("stories", slug, locale);
+            if (res.body.length > 1 && res.body[1]?.media) {
+              setMedia(res.body[1]?.media);
+            } else if (res.thumb) {
+              setMedia(res.thumb);
+            }
+            setItem(res);
+          } catch (e2) {
+            console.log('Story not found:', e2);
+          }
         }
-        setItem(res);
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
-  }, [id, locale]);
+  }, [slug, locale]);
 
   const fetchUsStates = async () => {
     try {

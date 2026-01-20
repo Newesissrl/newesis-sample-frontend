@@ -125,7 +125,7 @@ jobs:
             az aks install-cli
             az aks get-credentials --resource-group ${{ vars.RESOURCE_GROUP }} --name ${{ vars.CLUSTER_NAME }} --admin
             helm dependency build ${{ vars.CHART_PATH }}
-            helm upgrade -i -n ${{ vars.DEPLOY_NAMESPACE }} --create-namespace newesis-frontend ${{ vars.CHART_PATH }} --set sampleFrontend.imageTag=${{ needs.gitversion.outputs.tagVersion }},sampleFrontend.image=${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }}
+            helm upgrade -i -n ${{ vars.DEPLOY_NAMESPACE }} --create-namespace newesis-frontend ${{ vars.CHART_PATH }} --set sampleFrontend.imageTag=${{ needs.gitversion.outputs.tagVersion }},sampleFrontend.image=${{ vars.NEWESIS_CONTAINER_REGISTRY_NAME }}/${{ vars.IMAGE_NAME }},tenant.site.formPage.type="story",tenant.site.formPage.title="Work with Us",tenant.site.formPage.storySlug="work-with-us"
 
   deployMzingaFE:
     permissions:

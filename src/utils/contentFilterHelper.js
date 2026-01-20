@@ -34,4 +34,7 @@ export const formPageTitle = getEnvKey(
 
 export const formPageSlug = getEnvKey("REACT_APP_FORM_PAGE_SLUG", "contact-us");
 
+export const formPageType = getEnvKey("REACT_APP_FORM_PAGE_TYPE", "form"); // "form" or "story"
+export const formPageStorySlug = getEnvKey("REACT_APP_FORM_PAGE_STORY_SLUG", "");
+
 export const storyListUri = getEnvKey("REACT_APP_STORY_LIST_URI", "/projects");
