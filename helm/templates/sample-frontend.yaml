@@ -61,6 +61,10 @@ spec:
               value: {{ .Values.tenant.site.formPage.slug }}
             - name: REACT_APP_FORM_PAGE_URI
               value: "{{ .Values.tenant.site.formPage.uri }}"
+            - name: REACT_APP_FORM_PAGE_TYPE
+              value: {{ .Values.tenant.site.formPage.type | default "form" }}
+            - name: REACT_APP_FORM_PAGE_STORY_SLUG
+              value: {{ .Values.tenant.site.formPage.storySlug | default "" }}
             - name: TENANT
               value: {{ .Values.tenant.name }}
             - name: TITLE

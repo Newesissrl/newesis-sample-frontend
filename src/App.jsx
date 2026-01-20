@@ -12,10 +12,15 @@ import {
   formPageUri,
   storyListUri,
   topPageUri,
+  formPageType,
+  formPageStorySlug,
 } from "./utils/contentFilterHelper";
 import { socket, SocketContext } from "./utils/socket";
 
 const App = () => {
+  // Only add form route if not redirecting to story
+  const shouldAddFormRoute = formPageType !== "story" || !formPageStorySlug;
+  
   return (
     <SocketContext.Provider value={socket}>
       <BrowserRouter>
@@ -25,10 +30,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path={topPageUri} element={<TopPage />} />
-            <Route path={formPageUri} element={<FormPage />} />
+            {shouldAddFormRoute && <Route path={formPageUri} element={<FormPage />} />}
             <Route path="/forms/:slug" element={<FormPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/story/:id" element={<Detail />} />
+            <Route path="/story/:slug" element={<Detail />} />
             <Route path={storyListUri} element={<StoryList />} />
           </Routes>
         </div>

@@ -4,11 +4,21 @@ import {
   topPageTitle,
   formPageUri,
   formPageTitle,
+  formPageType,
+  formPageStorySlug,
 } from "../utils/contentFilterHelper";
 export default function Nav() {
   const setLocale = (locale) => {
     window.localStorage.setItem("locale", locale);
     window.location.reload();
+  };
+  
+  // Determine the correct URI based on configuration
+  const getFormPageUri = () => {
+    if (formPageType === "story" && formPageStorySlug) {
+      return `/story/${formPageStorySlug}`;
+    }
+    return formPageUri;
   };
   return (
     <nav id="navigation">
@@ -19,7 +29,7 @@ export default function Nav() {
       </ul>
       <ul className="mt-4 flex justify-end px-4">
         <li className="pl-4">
-          <a href={formPageUri}>{formPageTitle}</a>
+          <a href={getFormPageUri()}>{formPageTitle}</a>
         </li>
       </ul>
       <ul className="mt-4 flex justify-end px-4">

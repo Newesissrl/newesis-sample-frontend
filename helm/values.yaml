@@ -21,6 +21,8 @@ tenant:
       title: "Contact Us"
       slug: "contact-us"
       uri: "/contact-us"
+      type: "form"  # "form" or "story"
+      storySlug: ""  # Story slug when type is "story"
 nodePool:
   # priority: "Spot" # To be set to force deployment in spot instances
   spot:
